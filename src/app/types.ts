@@ -2,7 +2,7 @@ type Product = {
   id: number;
   name: string;
   release_year: string;
-  image: string;
+  cover_image: string;
   price: number;
 };
 
@@ -24,4 +24,4 @@ type ProductsResponse = {
   };
 };
 
-export type { Product, ProductsResponse };
+export type { ProductsResponse, Product };
