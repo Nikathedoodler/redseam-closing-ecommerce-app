@@ -21,6 +21,7 @@ type ProductsResponse = {
     path: string;
     per_page: number;
     to: number;
+    total?: number;
   };
 };
 
