@@ -11,6 +11,7 @@ import FilterModal from "../../../components/ui/FilterModal";
 
 const Products = () => {
   const [page, setPage] = useState(1);
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
   const {
     data,
     isLoading,
@@ -39,8 +40,18 @@ const Products = () => {
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen w-full max-w-[1920px] mx-auto`">
-      <ProductListHeader title="Products" productCount={data?.meta} />
-      <FilterModal />
+      <div>
+        <ProductListHeader
+          title="Products"
+          productCount={data?.meta}
+          modalOpen={filterModalOpen}
+          setModalOpen={setFilterModalOpen}
+        />
+        <FilterModal
+          modalOpen={filterModalOpen}
+          setModalOpen={setFilterModalOpen}
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 w-full">
         {data?.data.map((product: Product) => (
           <div
