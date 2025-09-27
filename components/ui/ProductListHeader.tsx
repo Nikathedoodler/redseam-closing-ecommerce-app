@@ -26,17 +26,12 @@ const ProductListHeader = ({
       <div className="mb-4">
         <h1 className="font-semibold text-[42px]">{title}</h1>
       </div>
-      <div className="flex items-center gap-4">
-        <div>
+      <div className="flex items-center gap-4 ">
+        <div className="hidden md:block">
           Showing {productCount.from}-{productCount.to} of {productCount.total}{" "}
           results
         </div>
-        <div className="relative">
-          <FilterButton
-            onClick={() => setModalOpen(!modalOpen)}
-            modalOpen={modalOpen}
-          />
-        </div>
+        <FilterButton onClick={() => setModalOpen(!modalOpen)} />
       </div>
     </div>
   );

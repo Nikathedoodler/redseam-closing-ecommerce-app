@@ -40,19 +40,16 @@ const Products = () => {
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen w-full max-w-[1920px] mx-auto`">
-      <div>
+      <div className="relative">
         <ProductListHeader
           title="Products"
           productCount={data?.meta}
           modalOpen={filterModalOpen}
           setModalOpen={setFilterModalOpen}
         />
-        <FilterModal
-          modalOpen={filterModalOpen}
-          setModalOpen={setFilterModalOpen}
-        />
+        <FilterModal modalOpen={filterModalOpen} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full">
         {data?.data.map((product: Product) => (
           <div
             key={product.id}
