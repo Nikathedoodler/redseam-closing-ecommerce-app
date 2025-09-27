@@ -1,6 +1,15 @@
-const FilterButton = () => {
+const FilterButton = ({
+  onClick,
+  modalOpen,
+}: {
+  onClick: () => void;
+  modalOpen: boolean;
+}) => {
   return (
-    <div className="flex items-center gap-2">
+    <button
+      className="flex items-center gap-2 cursor-pointer"
+      onClick={onClick}
+    >
       <svg
         width="24"
         height="24"
@@ -17,7 +26,7 @@ const FilterButton = () => {
         />
       </svg>
       <span className="text-[16px] font-medium">Filter</span>
-    </div>
+    </button>
   );
 };
 

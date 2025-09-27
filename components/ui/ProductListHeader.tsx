@@ -10,10 +10,17 @@ type ProductCount = {
 type ProductListHeaderProps = {
   title: string;
   productCount: ProductCount;
+  modalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
 };
 
-const ProductListHeader = ({ title, productCount }: ProductListHeaderProps) => {
-  console.log(productCount, "productCound");
+const ProductListHeader = ({
+  title,
+  productCount,
+  modalOpen,
+  setModalOpen,
+}: ProductListHeaderProps) => {
+  console.log(productCount, "productCount");
   return (
     <div className="flex items-center justify-between">
       <div className="mb-4">
@@ -24,7 +31,12 @@ const ProductListHeader = ({ title, productCount }: ProductListHeaderProps) => {
           Showing {productCount.from}-{productCount.to} of {productCount.total}{" "}
           results
         </div>
-        <FilterButton />
+        <div className="relative">
+          <FilterButton
+            onClick={() => setModalOpen(!modalOpen)}
+            modalOpen={modalOpen}
+          />
+        </div>
       </div>
     </div>
   );
