@@ -1,10 +1,4 @@
-const FilterButton = ({
-  onClick,
-  modalOpen,
-}: {
-  onClick: () => void;
-  modalOpen: boolean;
-}) => {
+const FilterButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       className="flex items-center gap-2 cursor-pointer"
