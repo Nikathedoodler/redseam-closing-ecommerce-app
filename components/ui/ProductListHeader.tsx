@@ -5,7 +5,7 @@ import { SortButton } from "../icons/SortButton";
 type ProductCount = {
   from: number;
   to: number;
-  total: number;
+  total?: number;
 };
 
 type ProductListHeaderProps = {
@@ -33,8 +33,8 @@ const ProductListHeader = ({
       </div>
       <div className="flex items-center gap-4 ">
         <div className="hidden md:block">
-          Showing {productCount.from}-{productCount.to} of {productCount.total}{" "}
-          results
+          Showing {productCount.from}-{productCount.to} of{" "}
+          {productCount.total || 0} results
         </div>
         <FilterButton
           onClick={() => {
