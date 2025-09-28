@@ -15,6 +15,7 @@ const Products = () => {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [sortModalOpen, setSortModalOpen] = useState(false);
   const [filteredPrice, setFilteredPrice] = useState({});
+  const [sort, setSort] = useState("");
 
   const {
     data,
@@ -25,17 +26,23 @@ const Products = () => {
     isPlaceholderData,
     isPending,
   } = useQuery<ProductsResponse, Error>({
-    queryKey: ["products", { page, filter: filteredPrice }],
-    queryFn: () => fetchProducts({ page, filter: filteredPrice }),
+    queryKey: ["products", page, filteredPrice, sort],
+    queryFn: () => fetchProducts({ page, filter: filteredPrice, sort }),
     placeholderData: keepPreviousData,
   });
 
   console.log(data, "data");
 
   const handleFilter = (filter: { price_from: number; price_to: number }) => {
-    console.log(filter, "filter");
     setFilterModalOpen(false);
     setFilteredPrice(filter);
+    setPage(1);
+  };
+
+  const handleSort = (sort: string) => {
+    setSortModalOpen(false);
+    setSort(sort);
+    setPage(1);
   };
 
   const totalPages =
@@ -49,7 +56,7 @@ const Products = () => {
   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen w-full max-w-[1920px] mx-auto`">
+    <div className="bg-[#FFFFFF] min-h-screen w-full max-w-[1920px] mx-auto">
       <div className="relative">
         <ProductListHeader
           title="Products"
@@ -60,9 +67,9 @@ const Products = () => {
           setSortModalOpen={setSortModalOpen}
         />
         <FilterModal modalOpen={filterModalOpen} handleFilter={handleFilter} />
-        <SortModal sortModalOpen={sortModalOpen} />
+        <SortModal sortModalOpen={sortModalOpen} handleSort={handleSort} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 mb-10 w-full">
         {data?.data.map((product: Product) => (
           <div
             key={product.id}
@@ -72,11 +79,11 @@ const Products = () => {
               src={product.cover_image}
               alt={product.name}
               height={549}
-              className="w-full object-cover border rounded-lg"
+              className="w-full object-cover rounded-lg"
             />
             <div className="mt-2 text-[#10151F] text-[18px]">
-              <div>{product.name}</div>
-              <div>$ {product.price}</div>
+              <div className="text-[18px] font-medium">{product.name}</div>
+              <div className="text-[16px] font-medium">$ {product.price}</div>
             </div>
           </div>
         ))}
