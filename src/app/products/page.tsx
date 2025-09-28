@@ -8,10 +8,12 @@ import { useState } from "react";
 import { Pagination } from "../../../components/icons/Pagination";
 import ProductListHeader from "../../../components/ui/ProductListHeader";
 import FilterModal from "../../../components/ui/FilterModal";
+import SortModal from "../../../components/ui/SortModal";
 
 const Products = () => {
   const [page, setPage] = useState(1);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
+  const [sortModalOpen, setSortModalOpen] = useState(false);
   const {
     data,
     isLoading,
@@ -43,11 +45,14 @@ const Products = () => {
       <div className="relative">
         <ProductListHeader
           title="Products"
-          productCount={data?.meta}
+          productCount={data?.meta || { from: 0, to: 0, total: 0 }}
           modalOpen={filterModalOpen}
           setModalOpen={setFilterModalOpen}
+          sortModalOpen={sortModalOpen}
+          setSortModalOpen={setSortModalOpen}
         />
         <FilterModal modalOpen={filterModalOpen} />
+        <SortModal sortModalOpen={sortModalOpen} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full">
         {data?.data.map((product: Product) => (
