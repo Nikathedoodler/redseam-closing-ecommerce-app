@@ -1,4 +1,4 @@
-import { appClient } from "./utils/app-client";
+import { appClient } from "../utils/app-client";
 
 type Params = {
   page?: number;

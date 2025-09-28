@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Product } from "../types";
 import { ProductsResponse } from "../types";
 import { useState } from "react";
-import { Pagination } from "../../../components/icons/Pagination";
+import { Pagination } from "../../../components/ui/Pagination";
 import ProductListHeader from "../../../components/ui/ProductListHeader";
 import FilterModal from "../../../components/ui/FilterModal";
 import SortModal from "../../../components/ui/SortModal";
