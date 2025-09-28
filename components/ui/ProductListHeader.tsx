@@ -1,5 +1,6 @@
 import React from "react";
 import { FilterButton } from "../icons/FilterButton";
+import { SortButton } from "../icons/SortButton";
 
 type ProductCount = {
   from: number;
@@ -12,6 +13,8 @@ type ProductListHeaderProps = {
   productCount: ProductCount;
   modalOpen: boolean;
   setModalOpen: (open: boolean) => void;
+  sortModalOpen: boolean;
+  setSortModalOpen: (open: boolean) => void;
 };
 
 const ProductListHeader = ({
@@ -19,6 +22,8 @@ const ProductListHeader = ({
   productCount,
   modalOpen,
   setModalOpen,
+  sortModalOpen,
+  setSortModalOpen,
 }: ProductListHeaderProps) => {
   console.log(productCount, "productCount");
   return (
@@ -31,7 +36,18 @@ const ProductListHeader = ({
           Showing {productCount.from}-{productCount.to} of {productCount.total}{" "}
           results
         </div>
-        <FilterButton onClick={() => setModalOpen(!modalOpen)} />
+        <FilterButton
+          onClick={() => {
+            setModalOpen(!modalOpen);
+            if (sortModalOpen) setSortModalOpen(false);
+          }}
+        />
+        <SortButton
+          onClick={() => {
+            setSortModalOpen(!sortModalOpen);
+            if (modalOpen) setModalOpen(false);
+          }}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import React from "react";
 
 const FilterModal = ({ modalOpen }: { modalOpen: boolean }) => {
-  if (!modalOpen) return null;
+  if (!modalOpen) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col absolute top-full sm:right-4 md:right-8 lg:right-12 z-10 gap-4 w-[392px] h-[169px] bg-[#FFFFFF] border border-[#E1DFE1] rounded-[8px] p-4">
       <p className="text-[16px] font-semibold text-[#10151F]">Select Price</p>
