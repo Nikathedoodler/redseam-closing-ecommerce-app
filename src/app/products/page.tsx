@@ -14,6 +14,8 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [sortModalOpen, setSortModalOpen] = useState(false);
+  const [filteredPrice, setFilteredPrice] = useState({});
+
   const {
     data,
     isLoading,
@@ -23,12 +25,18 @@ const Products = () => {
     isPlaceholderData,
     isPending,
   } = useQuery<ProductsResponse, Error>({
-    queryKey: ["products", page],
-    queryFn: () => fetchProducts({ page }),
+    queryKey: ["products", { page, filter: filteredPrice }],
+    queryFn: () => fetchProducts({ page, filter: filteredPrice }),
     placeholderData: keepPreviousData,
   });
 
   console.log(data, "data");
+
+  const handleFilter = (filter: { price_from: number; price_to: number }) => {
+    console.log(filter, "filter");
+    setFilterModalOpen(false);
+    setFilteredPrice(filter);
+  };
 
   const totalPages =
     data?.meta &&
@@ -51,7 +59,7 @@ const Products = () => {
           sortModalOpen={sortModalOpen}
           setSortModalOpen={setSortModalOpen}
         />
-        <FilterModal modalOpen={filterModalOpen} />
+        <FilterModal modalOpen={filterModalOpen} handleFilter={handleFilter} />
         <SortModal sortModalOpen={sortModalOpen} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 w-full">
