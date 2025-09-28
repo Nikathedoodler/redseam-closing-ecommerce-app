@@ -45,7 +45,7 @@ const Products = () => {
       <div className="relative">
         <ProductListHeader
           title="Products"
-          productCount={data?.meta || { from: 0, to: 0, total: 0 }}
+          productCount={data?.meta || { from: 0, to: 0 }}
           modalOpen={filterModalOpen}
           setModalOpen={setFilterModalOpen}
           sortModalOpen={sortModalOpen}
