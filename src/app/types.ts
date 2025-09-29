@@ -22,6 +22,7 @@ type ProductsResponse = {
     per_page: number;
     to: number;
     total?: number;
+    last_page: number;
   };
 };
 

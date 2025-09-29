@@ -1,10 +1,14 @@
 "use client";
 
 import { fetchProducts } from "@/lib/api/products";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Product } from "../types";
 import { ProductsResponse } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "../../../components/ui/Pagination";
 import ProductListHeader from "../../../components/ui/ProductListHeader";
 import FilterModal from "../../../components/ui/FilterModal";
@@ -16,6 +20,8 @@ const Products = () => {
   const [sortModalOpen, setSortModalOpen] = useState(false);
   const [filteredPrice, setFilteredPrice] = useState({});
   const [sort, setSort] = useState("");
+
+  const queryClient = useQueryClient();
 
   const {
     data,
@@ -29,9 +35,23 @@ const Products = () => {
     queryKey: ["products", page, filteredPrice, sort],
     queryFn: () => fetchProducts({ page, filter: filteredPrice, sort }),
     placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
   });
 
   console.log(data, "data");
+
+  // Prefetch next page when user is on current page
+  useEffect(() => {
+    if (page < (data?.meta.last_page || 0)) {
+      const nextPage = page + 1;
+      queryClient.prefetchQuery({
+        queryKey: ["products", nextPage, filteredPrice, sort],
+        queryFn: () =>
+          fetchProducts({ page: nextPage, filter: filteredPrice, sort }),
+      });
+    }
+  }, [page, filteredPrice, sort, data?.meta.last_page]);
 
   const handleFilter = (filter: { price_from: number; price_to: number }) => {
     setFilterModalOpen(false);
@@ -40,6 +60,8 @@ const Products = () => {
   };
 
   const handleSort = (sort: string) => {
+    // Clear cache when filters change significantly
+    queryClient.invalidateQueries({ queryKey: ["products"] });
     setSortModalOpen(false);
     setSort(sort);
     setPage(1);
