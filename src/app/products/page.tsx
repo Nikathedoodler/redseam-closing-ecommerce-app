@@ -6,6 +6,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import Link from "next/link";
 import { Product } from "../types";
 import { ProductsResponse } from "../types";
 import { useEffect, useState } from "react";
@@ -23,21 +24,15 @@ const Products = () => {
 
   const queryClient = useQueryClient();
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    isFetching,
-    isPlaceholderData,
-    isPending,
-  } = useQuery<ProductsResponse, Error>({
-    queryKey: ["products", page, filteredPrice, sort],
-    queryFn: () => fetchProducts({ page, filter: filteredPrice, sort }),
-    placeholderData: keepPreviousData,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
-  });
+  const { data, isLoading, isError, error } = useQuery<ProductsResponse, Error>(
+    {
+      queryKey: ["products", page, filteredPrice, sort],
+      queryFn: () => fetchProducts({ page, filter: filteredPrice, sort }),
+      placeholderData: keepPreviousData,
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 5,
+    }
+  );
 
   console.log(data, "data");
 
@@ -93,21 +88,20 @@ const Products = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 mb-10 w-full">
         {data?.data.map((product: Product) => (
-          <div
-            key={product.id}
-            className="w-full overflow-hidden  border-gray-200"
-          >
-            <img
-              src={product.cover_image}
-              alt={product.name}
-              height={549}
-              className="w-full object-cover rounded-lg"
-            />
-            <div className="mt-2 text-[#10151F] text-[18px]">
-              <div className="text-[18px] font-medium">{product.name}</div>
-              <div className="text-[16px] font-medium">$ {product.price}</div>
+          <Link href={`/products/${product.id}`} key={product.id}>
+            <div className="w-full overflow-hidden  border-gray-200">
+              <img
+                src={product.cover_image}
+                alt={product.name}
+                height={549}
+                className="w-full object-cover rounded-lg"
+              />
+              <div className="mt-2 text-[#10151F] text-[18px]">
+                <div className="text-[18px] font-medium">{product.name}</div>
+                <div className="text-[16px] font-medium">$ {product.price}</div>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <Pagination page={page} onPageChange={setPage} totalPages={totalPages} />
