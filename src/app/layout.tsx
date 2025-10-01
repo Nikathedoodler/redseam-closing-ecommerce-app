@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
-      <body className={`m-24 ${poppins.className} font-poppins`}>
+      <body className={`${poppins.className} font-poppins`}>
         <TankstackProvider> {children}</TankstackProvider>
       </body>
     </html>
