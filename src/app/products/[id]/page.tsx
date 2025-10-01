@@ -5,12 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchProduct } from "@/lib/api/products";
 import { ProductResponse } from "../../types";
+import ProductSkeleton from "../../../../components/ui/ProductSkeleton";
 
 const page = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedQuantity, setSelectedQuantity] = useState<number | null>(1);
+  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -20,16 +21,14 @@ const page = () => {
 
   useEffect(() => {
     setSelectedImage(data?.cover_image || null);
-    setSelectedColor(data?.available_colors[0] || null);
+    setSelectedColor(data?.available_colors?.[0] || null);
     setSelectedSize(data?.size || null);
     setSelectedQuantity(data?.quantity === 0 ? 0 : 1);
   }, [data]);
 
-  const HandleSelectedImage = (img: string, index: number) => {
+  const handleSelectedImage = (img: string, index: number) => {
     setSelectedImage(img);
-    setSelectedColor(
-      data?.available_colors[index] ? data.available_colors[index] : null
-    );
+    setSelectedColor(data?.available_colors?.[index] || null);
   };
 
   const handleColorChange = (color: string, index: number) => {
@@ -47,8 +46,8 @@ const page = () => {
 
   console.log(data, "data in product page");
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error?.message}</div>;
+  if (isLoading) return <ProductSkeleton />; // Better UX
+  if (isError) return <div>Error: {error?.message}</div>; // Better UX
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen xl:mx-30 md:mx-20 mx-0 max-w-[1920px]">
@@ -62,7 +61,7 @@ const page = () => {
               key={img}
               src={img}
               alt={img}
-              onClick={() => HandleSelectedImage(img, index)}
+              onClick={() => handleSelectedImage(img, index)}
             />
           ))}
         </div>
@@ -90,7 +89,7 @@ const page = () => {
                   className="w-[38px] h-[38px] rounded-full border-2 border-[#10151F] cursor-pointer"
                   style={{
                     backgroundColor: color,
-                    padding: selectedColor === color ? "10" : "0px",
+                    padding: selectedColor === color ? "10px" : "0px",
                     width: selectedColor === color ? "48px" : "38px",
                     height: selectedColor === color ? "48px" : "38px",
                   }}
