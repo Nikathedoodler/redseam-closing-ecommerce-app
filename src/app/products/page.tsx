@@ -14,6 +14,7 @@ import { Pagination } from "../../../components/ui/Pagination";
 import ProductListHeader from "../../../components/ui/ProductListHeader";
 import FilterModal from "../../../components/ui/FilterModal";
 import SortModal from "../../../components/ui/SortModal";
+import ProductsListSkeleton from "../../../components/ui/ProductsListSkeleton";
 
 const Products = () => {
   const [page, setPage] = useState(1);
@@ -69,7 +70,7 @@ const Products = () => {
       ? Math.ceil(data.meta.total / data.meta.per_page)
       : 0;
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <ProductsListSkeleton />;
   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
