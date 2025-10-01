@@ -15,3 +15,8 @@ export const fetchProducts = async (params: Params) => {
   const response = await appClient.get(PRODUCTS_URL, { params });
   return response.data;
 };
+
+export const fetchProduct = async (id: string) => {
+  const response = await appClient.get(`${PRODUCTS_URL}/${id}`);
+  return response.data;
+};

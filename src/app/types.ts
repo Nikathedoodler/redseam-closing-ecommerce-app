@@ -6,6 +6,26 @@ type Product = {
   price: number;
 };
 
+type ProductResponse = {
+  available_colors: string[];
+  available_sizes: string[];
+  brand: {
+    id: number;
+    image: string;
+    name: string;
+  };
+  cover_image: string;
+  description: string;
+  id: number;
+  images: string[];
+  name: string;
+  price: number;
+  quantity: number;
+  release_year: string;
+  size: string;
+  total_price: number;
+};
+
 type ProductsResponse = {
   data: Product[];
   links: {
@@ -26,4 +46,4 @@ type ProductsResponse = {
   };
 };
 
-export type { ProductsResponse, Product };
+export type { ProductsResponse, Product, ProductResponse };
