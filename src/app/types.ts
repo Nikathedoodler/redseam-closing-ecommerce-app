@@ -46,4 +46,9 @@ type ProductsResponse = {
   };
 };
 
-export type { ProductsResponse, Product, ProductResponse };
+type HeaderCartCount = {
+  count: number;
+  onCartClick: () => void;
+};
+
+export type { ProductsResponse, Product, ProductResponse, HeaderCartCount };

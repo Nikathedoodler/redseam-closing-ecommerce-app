@@ -1,8 +1,14 @@
 import React from "react";
 
-const CartBlack = () => {
+const CartBlack = ({
+  onClick,
+  className,
+}: {
+  onClick: () => void;
+  className?: string;
+}) => {
   return (
-    <div>
+    <div onClick={onClick} className={className}>
       <svg
         width="24"
         height="24"

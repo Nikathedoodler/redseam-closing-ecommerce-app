@@ -1,9 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Logo from "../icons/Logo";
 import CartBlack from "../icons/CartBlack";
 import DownArrow from "../icons/DownArrow";
+import Cart from "./Cart";
 
 const Header = () => {
+  const [isCartOpen, setIsCartOpen] = useState(false);
   return (
     <header className="w-full flex items-center justify-between py-10 px-6 lg:px-12 xl:px-16 2xl:px-20">
       {/* Logo Section */}
@@ -15,11 +19,14 @@ const Header = () => {
       </div>
 
       {/* Cart and User Profile Section */}
-      <div className="flex items-center gap-5 cursor-pointer">
-        <CartBlack />
+      <div className="flex items-center gap-5">
+        <CartBlack
+          onClick={() => setIsCartOpen(!isCartOpen)}
+          className="cursor-pointer hover:opacity-80 transition-opacity"
+        />
 
         {/* User Profile */}
-        <div className="flex items-center gap-2 w-16 h-10">
+        <div className="flex items-center gap-2 w-16 h-10 cursor-pointer hover:opacity-80 transition-opacity">
           <img
             src="/images/avatars/head.webp"
             alt="alonso"
@@ -28,6 +35,9 @@ const Header = () => {
           <DownArrow />
         </div>
       </div>
+
+      {/* Cart Sidebar - Rendered outside the header flow */}
+      <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
     </header>
   );
 };
