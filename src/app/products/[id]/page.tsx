@@ -6,12 +6,14 @@ import { useParams } from "next/navigation";
 import { fetchProduct } from "@/lib/api/products";
 import { ProductResponse } from "../../types";
 import ProductSkeleton from "../../../../components/ui/ProductSkeleton";
+import Cart from "../../../../components/ui/Cart";
 
 const page = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -154,7 +156,10 @@ const page = () => {
             </div>
           </div>
           <div>
-            <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+            <button
+              className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
+              onClick={() => setIsCartOpen(true)}
+            >
               Add to Cart
             </button>
           </div>
@@ -176,6 +181,7 @@ const page = () => {
           </div>
         </div>
       </div>
+      <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
     </div>
   );
 };
