@@ -82,14 +82,29 @@ const Cart = ({ className }: CartProps) => {
                 <div className="text-sm font-[400]">{item.color}</div>
                 <div className="text-sm font-[400]">{item.size}</div>
                 <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
-                  <button>-</button>
+                  <button
+                    onClick={() => decrementQuantity(item.id)}
+                    className="cursor-pointer"
+                  >
+                    -
+                  </button>
                   <div>{item.selectedQuantity}</div>
-                  <button>+</button>
+                  <button
+                    onClick={() => incrementQuantity(item.id, item.maxStock)}
+                    className="cursor-pointer"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col justify-between items-center w-1/6 p-2">
                 <div className="text-md font-[500]">$ {item.price}</div>
-                <button className="text-xs font-[400]">Remove</button>
+                <button
+                  className="text-xs font-[400] cursor-pointer"
+                  onClick={() => removeFromCart(item)}
+                >
+                  Remove
+                </button>
               </div>
             </div>
           ))}
