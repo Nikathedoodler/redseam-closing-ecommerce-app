@@ -1,6 +1,8 @@
+"use client";
+
 import { createContext, useState, useContext, ReactNode } from "react";
 
-type CartItem = {
+export type CartItem = {
   id: number;
   cover_image: string;
   name: string;
@@ -9,7 +11,7 @@ type CartItem = {
   maxStock: number;
   total_price?: number;
   size?: string;
-  color?: string;
+  color?: string | undefined;
 };
 
 type CartContextType = {
@@ -121,4 +123,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </ProductCartContext.Provider>
   );
+};
+
+export const useCart = () => {
+  const context = useContext(ProductCartContext);
+  if (context === undefined) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };

@@ -5,9 +5,11 @@ import Logo from "../icons/Logo";
 import CartBlack from "../icons/CartBlack";
 import DownArrow from "../icons/DownArrow";
 import Cart from "./Cart";
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  // const [isCartOpen, setIsCartOpen] = useState(false);
+  const { isCartOpen, totalItems, setIsCartOpen } = useCart();
   return (
     <header className="w-full flex items-center justify-between py-10 px-6 lg:px-12 xl:px-16 2xl:px-20">
       {/* Logo Section */}
@@ -37,7 +39,7 @@ const Header = () => {
       </div>
 
       {/* Cart Sidebar - Rendered outside the header flow */}
-      <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
+      <Cart />
     </header>
   );
 };
