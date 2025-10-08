@@ -35,7 +35,7 @@ const Cart = ({ className }: CartProps) => {
 
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-96 flex flex-col gap-30 lg:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full flex flex-col gap-30 sm:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         } ${className}`}
       >
@@ -69,24 +69,25 @@ const Cart = ({ className }: CartProps) => {
             </Link>
           </div>
         )}
-        <div className="w-full flex flex-col gap-10">
+        <div className="flex flex-col items-stretch gap-6 px-6">
           {cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="flex justify-between items-center gap-6 px-8"
-            >
+            <div key={item.id} className="flex items-stretch gap-4">
               <img
                 src={item.cover_image}
                 alt=""
                 className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl p-4"
               />
-              <div className="flex flex-col w-2/3 text-[#10151F]">
+              <div className="flex-1 flex flex-col justify-between p-2">
                 <div className="text-md font-[500]">{item.name}</div>
                 <div className="text-sm font-[400]">{item.color}</div>
                 <div className="text-sm font-[400]">{item.size}</div>
-                <div>{item.selectedQuantity}</div>
+                <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
+                  <button>-</button>
+                  <div>{item.selectedQuantity}</div>
+                  <button>+</button>
+                </div>
               </div>
-              <div className="flex flex-col justify-between items-center w-1/6">
+              <div className="flex flex-col justify-between items-center w-1/6 p-2">
                 <div className="text-md font-[500]">$ {item.price}</div>
                 <button className="text-xs font-[400]">Remove</button>
               </div>
