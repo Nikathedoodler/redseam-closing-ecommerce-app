@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { TankstackProvider } from "../../components/providers/tankstack-provider";
 import Header from "../../components/ui/Header";
+import { CartProvider } from "../../components/context/CartContext";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -28,10 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable}`}>
       <body className={`${poppins.className} font-poppins`}>
-        <Header />
-        <TankstackProvider>
-          <main>{children}</main>
-        </TankstackProvider>
+        <CartProvider>
+          <Header />
+          <TankstackProvider>
+            <main>{children}</main>
+          </TankstackProvider>
+        </CartProvider>
       </body>
     </html>
   );

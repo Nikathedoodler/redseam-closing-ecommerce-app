@@ -7,13 +7,18 @@ import { fetchProduct } from "@/lib/api/products";
 import { ProductResponse } from "../../types";
 import ProductSkeleton from "../../../../components/ui/ProductSkeleton";
 import Cart from "../../../../components/ui/Cart";
+import { useCart, CartItem } from "../../../../components/context/CartContext";
 
 const page = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null | undefined>(
+    null
+  );
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  // const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+
+  const { isCartOpen, setIsCartOpen, addToCart } = useCart();
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -47,6 +52,27 @@ const page = () => {
       : [1];
 
   console.log(data, "data in product page");
+
+  const handleAddToCart = () => {
+    if (!data) {
+      console.error("No product data available");
+      return;
+    }
+
+    const itemData: CartItem = {
+      id: data?.id,
+      cover_image: data?.cover_image,
+      name: data?.name,
+      price: data?.price,
+      selectedQuantity,
+      maxStock: data?.quantity,
+      total_price: data?.total_price,
+      size: data?.size ?? undefined,
+      color: selectedColor ?? undefined,
+    };
+
+    addToCart(itemData);
+  };
 
   if (isLoading) return <ProductSkeleton />; // Better UX
   if (isError) return <div>Error: {error?.message}</div>; // Better UX
@@ -158,7 +184,10 @@ const page = () => {
           <div>
             <button
               className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => {
+                setIsCartOpen(true);
+                handleAddToCart();
+              }}
             >
               Add to Cart
             </button>
@@ -181,7 +210,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
+      <Cart />
     </div>
   );
 };
