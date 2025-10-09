@@ -35,13 +35,15 @@ const Cart = ({ className }: CartProps) => {
 
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-full flex flex-col gap-30 sm:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full flex flex-col ${
+          !cartItems.length ? "gap-30" : "gap-10"
+        } sm:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         } ${className}`}
       >
         <div className="flex justify-between items-center p-4 mt-4">
           <h1 className="text-[20px] font-[500] text-[#10151F]">
-            Sopping Cart ( {} )
+            Sopping Cart ({totalItems})
           </h1>
           <CloseButton onClick={() => setIsCartOpen(false)} />
         </div>
@@ -84,14 +86,22 @@ const Cart = ({ className }: CartProps) => {
                 <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
                   <button
                     onClick={() => decrementQuantity(item.id)}
-                    className="cursor-pointer"
+                    className={`cursor-pointer ${
+                      item.selectedQuantity === 1 ? "text-gray-700" : ""
+                    }`}
+                    disabled={item.selectedQuantity === 1}
                   >
                     -
                   </button>
                   <div>{item.selectedQuantity}</div>
                   <button
                     onClick={() => incrementQuantity(item.id, item.maxStock)}
-                    className="cursor-pointer"
+                    disabled={item.selectedQuantity === item.maxStock}
+                    className={`cursor-pointer ${
+                      item.selectedQuantity === item.maxStock
+                        ? "text-graay-700"
+                        : ""
+                    }`}
                   >
                     +
                   </button>
