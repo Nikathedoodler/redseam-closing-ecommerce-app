@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
 export type CartItem = {
   id: number;
@@ -33,7 +39,21 @@ const ProductCartContext = createContext<CartContextType | undefined>(
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    // Check if we're in the browser
+    if (typeof window !== "undefined") {
+      const savedCart = localStorage.getItem("cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    // Only save to localStorage if in browser
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
 
   const totalItems = cartItems.reduce(
     (sum, item) => sum + item.selectedQuantity,
@@ -45,19 +65,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const addToCart = (newItem: CartItem) => {
+    console.log(newItem, "newItem");
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        return prev.map((item) =>
-          item.id === newItem.id
-            ? {
-                ...item,
-                selectedQuantity:
-                  item.selectedQuantity + newItem.selectedQuantity,
-              }
-            : item
-        );
+        return prev.map((item) => {
+          if (item.id === newItem.id) {
+            const newTotal = item.selectedQuantity + newItem.selectedQuantity;
+            return {
+              ...item,
+              selectedQuantity: Math.min(newTotal, item.maxStock),
+            };
+          }
+          return item;
+        });
       } else {
         return [...prev, newItem];
       }

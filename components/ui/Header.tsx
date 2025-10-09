@@ -11,7 +11,7 @@ const Header = () => {
   // const [isCartOpen, setIsCartOpen] = useState(false);
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
   return (
-    <header className="w-full fixed top-0 left-0 right-0 z-50 border-b border-gray-200 bg-white flex items-center justify-between py-10 px-6 lg:px-12 xl:px-16 2xl:px-20">
+    <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-10 px-6 lg:px-12 xl:px-16 2xl:px-20">
       {/* Logo Section */}
       <div className="flex items-center gap-2 ">
         <Logo />
@@ -22,10 +22,17 @@ const Header = () => {
 
       {/* Cart and User Profile Section */}
       <div className="flex items-center gap-5">
-        <CartBlack
-          onClick={() => setIsCartOpen(!isCartOpen)}
-          className="cursor-pointer hover:opacity-80 transition-opacity"
-        />
+        <div className="relative">
+          <CartBlack
+            onClick={() => setIsCartOpen(!isCartOpen)}
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+          />
+          {totalItems > 0 && (
+            <span className="absolute -top-2 -right-2 bg-[#FF4000] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
+              {totalItems > 99 ? "99+" : totalItems}
+            </span>
+          )}
+        </div>
 
         {/* User Profile */}
         <div className="flex items-center gap-2 w-16 h-10 cursor-pointer hover:opacity-80 transition-opacity">
