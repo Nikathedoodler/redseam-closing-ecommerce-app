@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CartLogo from "../icons/CartLogo";
 import CloseButton from "../icons/CloseButton";
 import Link from "next/link";
@@ -20,6 +20,9 @@ const Cart = ({ className }: CartProps) => {
     removeFromCart,
   } = useCart();
 
+  const deliveryPrice = 5;
+  const total = deliveryPrice + totalPrice;
+
   console.log(cartItems, "cartItems");
   return (
     <>
@@ -35,7 +38,7 @@ const Cart = ({ className }: CartProps) => {
 
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-full flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-full flex flex-col overflow-scroll ${
           !cartItems.length ? "gap-30" : "gap-10"
         } sm:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
@@ -71,53 +74,82 @@ const Cart = ({ className }: CartProps) => {
             </Link>
           </div>
         )}
-        <div className="flex flex-col items-stretch gap-6 px-6">
-          {cartItems.map((item) => (
-            <div key={item.id} className="flex items-stretch gap-4">
-              <img
-                src={item.cover_image}
-                alt=""
-                className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl p-4"
-              />
-              <div className="flex-1 flex flex-col justify-between p-2">
-                <div className="text-md font-[500]">{item.name}</div>
-                <div className="text-sm font-[400]">{item.color}</div>
-                <div className="text-sm font-[400]">{item.size}</div>
-                <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
-                  <button
-                    onClick={() => decrementQuantity(item.id)}
-                    className={`cursor-pointer ${
-                      item.selectedQuantity === 1 ? "text-gray-700" : ""
-                    }`}
-                    disabled={item.selectedQuantity === 1}
-                  >
-                    -
-                  </button>
-                  <div>{item.selectedQuantity}</div>
-                  <button
-                    onClick={() => incrementQuantity(item.id, item.maxStock)}
-                    disabled={item.selectedQuantity === item.maxStock}
-                    className={`cursor-pointer ${
-                      item.selectedQuantity === item.maxStock
-                        ? "text-graay-700"
-                        : ""
-                    }`}
-                  >
-                    +
-                  </button>
+        {/* renders when there are items in the */}
+        <div className="flex flex-col justify-between h-full px-6 gap-10">
+          <div className="flex flex-col items-stretch gap-6">
+            {cartItems.map((item) => (
+              <div
+                className="flex flex-col justify-between items-strech"
+                key={item.id}
+              >
+                <div className="flex items-stretch gap-4">
+                  <img
+                    src={item.cover_image}
+                    alt=""
+                    className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl p-4"
+                  />
+                  <div className="flex-1 flex flex-col justify-between p-2">
+                    <div className="text-md font-[500]">{item.name}</div>
+                    <div className="text-sm font-[400]">{item.color}</div>
+                    <div className="text-sm font-[400]">{item.size}</div>
+                    <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
+                      <button
+                        onClick={() => decrementQuantity(item.id)}
+                        className={`cursor-pointer ${
+                          item.selectedQuantity === 1 ? "text-gray-700" : ""
+                        }`}
+                        disabled={item.selectedQuantity === 1}
+                      >
+                        -
+                      </button>
+                      <div>{item.selectedQuantity}</div>
+                      <button
+                        onClick={() =>
+                          incrementQuantity(item.id, item.maxStock)
+                        }
+                        disabled={item.selectedQuantity === item.maxStock}
+                        className={`cursor-pointer ${
+                          item.selectedQuantity === item.maxStock
+                            ? "text-graay-700"
+                            : ""
+                        }`}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-between items-center w-1/6 p-2">
+                    <div className="text-md font-[500]">$ {item.price}</div>
+                    <button
+                      className="text-xs font-[400] cursor-pointer"
+                      onClick={() => removeFromCart(item)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col justify-between items-center w-1/6 p-2">
-                <div className="text-md font-[500]">$ {item.price}</div>
-                <button
-                  className="text-xs font-[400] cursor-pointer"
-                  onClick={() => removeFromCart(item)}
-                >
-                  Remove
-                </button>
+            ))}
+          </div>
+          <div className="flex flex-col gap-10 mb-10">
+            <div className="flex flex-col gap-4 px-2">
+              <div className="flex items-center justify-between">
+                <div>Items subtotal</div>
+                <div>$ {totalPrice}</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>Delivery</div>
+                <div>$ {deliveryPrice}</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>Total</div>
+                <div>$ {total}</div>
               </div>
             </div>
-          ))}
+            <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+              Go To Checkout
+            </button>
+          </div>
         </div>
       </div>
     </>
