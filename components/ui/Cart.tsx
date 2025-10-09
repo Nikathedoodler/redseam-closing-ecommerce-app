@@ -46,7 +46,7 @@ const Cart = ({ className }: CartProps) => {
       >
         <div className="flex justify-between items-center p-4 mt-4">
           <h1 className="text-[20px] font-[500] text-[#10151F]">
-            Sopping Cart ({totalItems})
+            Shopping Cart ({totalItems})
           </h1>
           <CloseButton onClick={() => setIsCartOpen(false)} />
         </div>
@@ -110,7 +110,7 @@ const Cart = ({ className }: CartProps) => {
                         disabled={item.selectedQuantity === item.maxStock}
                         className={`cursor-pointer ${
                           item.selectedQuantity === item.maxStock
-                            ? "text-graay-700"
+                            ? "text-gray-700"
                             : ""
                         }`}
                       >
@@ -131,25 +131,27 @@ const Cart = ({ className }: CartProps) => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col gap-10 mb-10">
-            <div className="flex flex-col gap-4 px-2">
-              <div className="flex items-center justify-between">
-                <div>Items subtotal</div>
-                <div>$ {totalPrice}</div>
+          {cartItems.length && (
+            <div className="flex flex-col gap-10 mb-10">
+              <div className="flex flex-col gap-4 px-2">
+                <div className="flex items-center justify-between">
+                  <div>Items subtotal</div>
+                  <div>$ {totalPrice}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Delivery</div>
+                  <div>$ {deliveryPrice}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Total</div>
+                  <div>$ {total}</div>
+                </div>
               </div>
-              <div className="flex items-center justify-between">
-                <div>Delivery</div>
-                <div>$ {deliveryPrice}</div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div>Total</div>
-                <div>$ {total}</div>
-              </div>
+              <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+                Go To Checkout
+              </button>
             </div>
-            <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
-              Go To Checkout
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </>

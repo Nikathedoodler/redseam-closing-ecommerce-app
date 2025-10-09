@@ -27,9 +27,9 @@ const ProductListHeader = ({
 }: ProductListHeaderProps) => {
   console.log(productCount, "productCount");
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className="sticky top-40 z-40 bg-white flex items-center justify-between mb-4">
       <div>
-        <h1 className="font-semibold lg:text-[42px] text-[24px]">{title}</h1>
+        <h1 className="font-semibold lg:text-2xl text-xl">{title}</h1>
       </div>
       <div className="flex items-center gap-4 ">
         <div className="hidden md:block">
