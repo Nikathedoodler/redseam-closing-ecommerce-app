@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CartLogo from "../icons/CartLogo";
 import CloseButton from "../icons/CloseButton";
 import Link from "next/link";
@@ -147,9 +147,11 @@ const Cart = ({ className }: CartProps) => {
                   <div>$ {total}</div>
                 </div>
               </div>
-              <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
-                Go To Checkout
-              </button>
+              <Link href={"/checkout"}>
+                <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+                  Go To Checkout
+                </button>
+              </Link>
             </div>
           )}
         </div>
