@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useCart } from "../../../components/context/CartContext";
 import Link from "next/link";
+import CartLogo from "../../../components/icons/CartLogo";
 
 const page = () => {
   const [firstName, setFirstname] = useState("");
@@ -22,6 +23,26 @@ const page = () => {
 
   const deliveryPrice = 5;
   const total = deliveryPrice + totalPrice;
+
+  // Show empty cart message if cart is empty
+  if (!cartItems.length) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 xl:px-16 2xl:px-20 gap-10">
+        <CartLogo />
+        <div className="flex flex-col items-center justify-center gap-2">
+          <div className="text-[24px] font-[600] text-[#10151F]">Ooops!</div>
+          <div className="text-[14px] font-[400] text-[#10151F]">
+            You've got nothing in your cart just yet...
+          </div>
+        </div>
+        <Link href="/products" className="w-1/3 sm:w-1/2 lg:w-2/5">
+          <button className="w-full py-4 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+            Start Shopping
+          </button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col px-6 lg:px-12 xl:px-16 2xl:px-20 gap-10">
