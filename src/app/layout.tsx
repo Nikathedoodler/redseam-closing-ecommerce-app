@@ -32,7 +32,7 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           <TankstackProvider>
-            <main className="pt-40">{children}</main>
+            <main>{children}</main>
           </TankstackProvider>
         </CartProvider>
       </body>
