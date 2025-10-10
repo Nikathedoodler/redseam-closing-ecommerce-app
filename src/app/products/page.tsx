@@ -74,7 +74,7 @@ const Products = () => {
   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen w-full px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
+    <div className="bg-[#FFFFFF] min-h-screen w-full px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto mt-20">
       <div className="relative">
         <ProductListHeader
           title="Products"

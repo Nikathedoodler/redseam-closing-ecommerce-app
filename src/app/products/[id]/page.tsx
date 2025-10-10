@@ -78,7 +78,7 @@ const page = () => {
   if (isError) return <div>Error: {error?.message}</div>; // Better UX
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen px-6 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
+    <div className="bg-[#FFFFFF] min-h-screen px-6 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto mt-20">
       <div className="text-xs sm:text-sm font-light text-[#10151F] mb-6 sm:mb-8 lg:mb-10">
         Listing / Product
       </div>
