@@ -12,10 +12,7 @@ const page = () => {
   const [zip, setZip] = useState("");
 
   const {
-    isCartOpen,
-    setIsCartOpen,
     cartItems,
-    totalItems,
     totalPrice,
     incrementQuantity,
     decrementQuantity,
@@ -33,39 +30,41 @@ const page = () => {
         {/* left side - order details */}
         <div className="flex flex-col gap-10 bg-[#F8F6F7] rounded-2xl w-full xl:w-1/2 px-10 py-20">
           <div className="text-xl">Order Details</div>
-          <div className="flex gap-6 w-full xl:w-4/5">
+          <div className="flex flex-col gap-10">
+            <div className="flex gap-6 w-full xl:w-4/5">
+              <input
+                placeholder="name"
+                value={firstName}
+                onChange={(e) => setFirstname(e.target.value)}
+                className="bg-[#FFFFFF] placeholder-[#3E424A]  w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              />
+              <input
+                placeholder="Surname"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="bg-[#FFFFFF] placeholder-[#3E424A] w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              />
+            </div>
             <input
-              placeholder="name"
-              value={firstName}
-              onChange={() => {}}
-              className="bg-[#FFFFFF] placeholder-[#3E424A]  w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-[#FFFFFF] placeholder-[#3E424A] w-full xl:w-4/5 p-2 rounded-lg border-2 border-[#E1DFE1]"
             />
-            <input
-              placeholder="Surname"
-              value={lastName}
-              onChange={() => {}}
-              className="bg-[#FFFFFF] placeholder-[#3E424A] w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
-            />
-          </div>
-          <input
-            placeholder="Email"
-            value={email}
-            onChange={() => {}}
-            className="bg-[#FFFFFF] placeholder-[#3E424A] w-full xl:w-4/5 p-2 rounded-lg border-2 border-[#E1DFE1]"
-          />
-          <div className="flex gap-6 w-full xl:w-4/5">
-            <input
-              placeholder="Address"
-              value={address}
-              onChange={() => {}}
-              className="bg-[#FFFFFF] placeholder-[#3E424A]  w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
-            />
-            <input
-              placeholder="Zip code"
-              value={zip}
-              onChange={() => {}}
-              className="bg-[#FFFFFF] placeholder-[#3E424A] w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
-            />
+            <div className="flex gap-6 w-full xl:w-4/5">
+              <input
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="bg-[#FFFFFF] placeholder-[#3E424A]  w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              />
+              <input
+                placeholder="Zip code"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                className="bg-[#FFFFFF] placeholder-[#3E424A] w-1/2 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              />
+            </div>
           </div>
         </div>
         {/* Right side - cart info */}
@@ -144,11 +143,11 @@ const page = () => {
                 </div>
                 <Link
                   href={"/confirmation"}
-                  className="m-auto w-2/3 xl:w-full"
+                  className="mx-auto w-full"
                   onClick={() => clearCart()}
                 >
                   <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
-                    Go To Checkout
+                    Pay
                   </button>
                 </Link>
               </div>
