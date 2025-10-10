@@ -147,7 +147,7 @@ const Cart = ({ className }: CartProps) => {
                   <div>$ {total}</div>
                 </div>
               </div>
-              <Link href={"/checkout"}>
+              <Link href={"/checkout"} onClick={() => setIsCartOpen(false)}>
                 <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
                   Go To Checkout
                 </button>
