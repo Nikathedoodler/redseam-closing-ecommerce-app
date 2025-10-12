@@ -35,7 +35,7 @@ const Login = () => {
       </div>
       <div className="w-full md:w-2/3 lg:w-1/2 m-auto flex flex-col px-20 py-10 gap-10">
         <h1 className="text-3xl">Log in</h1>
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit(submit)}>
           <div className="relative w-full border-2 border-[#E1DFE1] rounded-lg">
             <input
               placeholder="Email"
@@ -66,11 +66,12 @@ const Login = () => {
             </span>
             <p>{errors.password?.message}</p>
           </div>
-          <Link href={""} className="mx-auto w-full">
-            <button className="w-full py-2 lg:py-3 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
-              Log in
-            </button>
-          </Link>
+          <button
+            className="w-full py-2 lg:py-3 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
+            type="submit"
+          >
+            Log in
+          </button>
         </form>
         <div className="flex mx-auto gap-2">
           <div>Not a member? </div>

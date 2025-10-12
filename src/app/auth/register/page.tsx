@@ -3,6 +3,8 @@
 import Link from "next/link";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { fetchRegister } from "../../../lib/api/Registration";
 
 type Inputs = {
   username: string;
@@ -12,6 +14,16 @@ type Inputs = {
 };
 
 const register = () => {
+  const mutation = useMutation({
+    mutationFn: fetchRegister,
+    onSuccess: (data) => {
+      console.log(data, "onSuccess data");
+    },
+    onError: (error) => {
+      console.error(error, "OnError error");
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -26,10 +38,17 @@ const register = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+    console.log(formData, "formData");
+    const apiData = {
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+      password_confirmation: formData.confirmPassword,
+    };
 
-  console.log(watch("username"));
-  console.log(errors, "errors");
+    mutation.mutate(apiData);
+  };
 
   return (
     <div className="flex h-screen">
