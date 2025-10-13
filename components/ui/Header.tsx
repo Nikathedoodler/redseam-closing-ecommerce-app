@@ -11,7 +11,7 @@ const Header = () => {
   // const [isCartOpen, setIsCartOpen] = useState(false);
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
   return (
-    <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-10 px-6 lg:px-12 xl:px-16 2xl:px-20">
+    <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20">
       {/* Logo Section */}
       <div className="flex items-center gap-2 ">
         <Logo />

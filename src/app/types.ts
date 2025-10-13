@@ -51,4 +51,20 @@ type HeaderCartCount = {
   onCartClick: () => void;
 };
 
-export type { ProductsResponse, Product, ProductResponse, HeaderCartCount };
+type RegistrationResponse = {
+  user: {
+    email: string;
+    name: string;
+    profile_photo?: string;
+    id: number;
+  };
+  token?: string;
+};
+
+export type {
+  ProductsResponse,
+  Product,
+  ProductResponse,
+  HeaderCartCount,
+  RegistrationResponse,
+};
