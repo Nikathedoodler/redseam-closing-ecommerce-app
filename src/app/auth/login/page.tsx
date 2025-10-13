@@ -3,6 +3,8 @@
 import Link from "next/link";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { login } from "../../../lib/api/login";
+import { useMutation } from "@tanstack/react-query";
 
 type Inputs = {
   email: string;
@@ -10,6 +12,16 @@ type Inputs = {
 };
 
 const Login = () => {
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -22,7 +34,9 @@ const Login = () => {
     },
   });
 
-  const submit: SubmitHandler<Inputs> = (data) => console.log(data, "data");
+  const submit: SubmitHandler<Inputs> = (loginData) => {
+    mutation.mutate(loginData);
+  };
 
   return (
     <div className="flex h-screen">
@@ -57,7 +71,7 @@ const Login = () => {
           <div className="relative rounded-lg">
             <input
               placeholder="Password"
-              type="passowrd"
+              type="password"
               className="w-full border-2 mb-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("password", { required: "This field is required" })}
             />

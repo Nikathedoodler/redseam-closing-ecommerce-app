@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { fetchRegister } from "../../../lib/api/Registration";
+import { fetchRegister } from "../../../lib/api/registration";
 
 type Inputs = {
   username: string;
@@ -39,12 +39,12 @@ const register = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log(formData, "formData");
     const apiData = {
       email: formData.email,
       username: formData.username,
       password: formData.password,
       password_confirmation: formData.confirmPassword,
+      avatar: "",
     };
 
     mutation.mutate(apiData);
