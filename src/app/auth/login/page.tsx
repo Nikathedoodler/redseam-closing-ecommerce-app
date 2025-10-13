@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../../../lib/api/login";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   email: string;
@@ -12,20 +13,38 @@ type Inputs = {
 };
 
 const Login = () => {
+  const [apiErrors, setApiErrors] = useState<any>({});
+
+  const router = useRouter();
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       console.log(data);
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      router.push("/products");
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: any) => {
+      console.log(error, "error");
+      if (error?.response?.status === 422) {
+        const errors = error.response.data;
+        setApiErrors(errors);
+      } else if (error?.response?.status === 401) {
+        const errors = error.response.data;
+        setApiErrors(errors);
+      } else {
+        setApiErrors({ general: "Something went wrong. Please try again." });
+      }
     },
   });
+
+  console.log(apiErrors, "apiErrors");
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -63,10 +82,10 @@ const Login = () => {
                 },
               })}
             />
-            <span className="absolute left-15 top-1/2 -translate-y-1/2 text-[#FF4000] pointer-events-none">
+            {/* <span className="absolute left-15 top-1/2 -translate-y-1/2 text-[#FF4000] pointer-events-none">
               *
-            </span>
-            <p>{errors.email?.message}</p>
+            </span> */}
+            <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
           <div className="relative rounded-lg">
             <input
@@ -75,11 +94,16 @@ const Login = () => {
               className="w-full border-2 mb-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("password", { required: "This field is required" })}
             />
-            <span className="text-[#FF4000] absolute left-24 top-1/2 -translate-y-1/2 pointer-events-none">
+            {/* <span className="text-[#FF4000] absolute left-24 top-1/2 -translate-y-1/2 pointer-events-none">
               *
-            </span>
-            <p>{errors.password?.message}</p>
+            </span> */}
+            <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
+          {apiErrors && (
+            <p className="text-red-500 text-md font-semibold mx-auto">
+              {apiErrors.message}
+            </p>
+          )}
           <button
             className="w-full py-2 lg:py-3 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
             type="submit"

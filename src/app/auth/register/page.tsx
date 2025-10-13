@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { fetchRegister } from "../../../lib/api/registration";
+import { fetchRegister } from "../../../lib/api/Registration";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   username: string;
@@ -14,13 +15,30 @@ type Inputs = {
 };
 
 const register = () => {
+  const [apiErrors, setApiErrors] = useState<any>({});
+
+  const router = useRouter();
+
   const mutation = useMutation({
     mutationFn: fetchRegister,
     onSuccess: (data) => {
       console.log(data, "onSuccess data");
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      router.push("./auth/login");
     },
-    onError: (error) => {
-      console.error(error, "OnError error");
+    onError: (error: any) => {
+      console.log(error, "error");
+      if (error?.response?.status === 422) {
+        const errors = error.response.data;
+        setApiErrors(errors);
+      } else if (error?.response?.status === 401) {
+        const errors = error.response.data.message;
+        setApiErrors(errors);
+      } else {
+        setApiErrors({ general: "Something went wrong. Please try again." });
+      }
     },
   });
 
@@ -75,7 +93,7 @@ const register = () => {
                 },
               })}
             />
-            <p>{errors.username?.message}</p>
+            <p className="text-red-500 text-sm">{errors.username?.message}</p>
           </div>
 
           <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
@@ -91,7 +109,7 @@ const register = () => {
                 },
               })}
             />
-            <p>{errors.email?.message}</p>
+            <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
 
           <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
@@ -107,7 +125,7 @@ const register = () => {
                 },
               })}
             />
-            <p>{errors.password?.message}</p>
+            <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
 
           <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
@@ -121,7 +139,9 @@ const register = () => {
                   value === watch("password") || "Passwords do not match",
               })}
             />
-            <p>{errors.confirmPassword?.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.confirmPassword?.message}
+            </p>
           </div>
           <button
             className="w-full py-2 lg:py-3 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
