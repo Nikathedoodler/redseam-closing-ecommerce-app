@@ -1,8 +1,17 @@
 import React from "react";
 
-const DownArrow = () => {
+const DownArrow = ({
+  handleDropdown,
+  dropdownOpen,
+}: {
+  handleDropdown: (open: boolean) => void;
+  dropdownOpen: boolean;
+}) => {
   return (
-    <div>
+    <div
+      onClick={() => handleDropdown(!dropdownOpen)}
+      className="cursor-pointer"
+    >
       <svg
         width="20"
         height="20"
