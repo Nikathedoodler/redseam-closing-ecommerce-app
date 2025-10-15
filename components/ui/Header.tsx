@@ -1,15 +1,75 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Logo from "../icons/Logo";
 import CartBlack from "../icons/CartBlack";
 import DownArrow from "../icons/DownArrow";
+import ProfileAvatar from "../icons/ProfileAvatar";
 import Cart from "./Cart";
 import { useCart } from "../context/CartContext";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
-  // const [isCartOpen, setIsCartOpen] = useState(false);
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
+
+  // Fix hydration mismatch by only rendering cart badge after mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Check authentication status
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("authToken");
+      console.log(token, "token");
+      setIsAuthenticated(!!token);
+    }
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
+  const handleSignOut = () => {
+    try {
+      setIsSigningOut(true);
+      localStorage.removeItem("authToken");
+      setIsAuthenticated(false); // Update authentication state
+      router.push("/auth/login");
+      setIsDropdownOpen(false);
+    } catch (error) {
+      console.error("Error during sign out", error);
+      router.push("auth/login");
+    } finally {
+      setIsSigningOut(false);
+    }
+  };
+
+  console.log({ isMounted, isAuthenticated });
+
   return (
     <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20">
       {/* Logo Section */}
@@ -21,28 +81,59 @@ const Header = () => {
       </div>
 
       {/* Cart and User Profile Section */}
-      <div className="flex items-center gap-5">
-        <div className="relative">
-          <CartBlack
-            onClick={() => setIsCartOpen(!isCartOpen)}
-            className="cursor-pointer hover:opacity-80 transition-opacity"
-          />
-          {totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 bg-[#FF4000] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
-              {totalItems > 99 ? "99+" : totalItems}
-            </span>
-          )}
-        </div>
+      <div className="flex items-center gap-5 relative">
+        {isMounted && isAuthenticated && (
+          <div className="relative">
+            <CartBlack
+              onClick={() => setIsCartOpen(!isCartOpen)}
+              className="cursor-pointer hover:opacity-80 transition-opacity"
+            />
+            {isMounted && totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#FF4000] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
+            )}
+          </div>
+        )}
 
-        {/* User Profile */}
-        <div className="flex items-center gap-2 w-16 h-10 cursor-pointer hover:opacity-80 transition-opacity">
-          <img
-            src="/images/avatars/head.webp"
-            alt="alonso"
-            className="w-10 h-full object-cover rounded-full"
-          />
-          <DownArrow />
-        </div>
+        {/* Conditional rendering based on authentication */}
+        {isMounted && isAuthenticated ? (
+          <>
+            {/* User Profile - Only show when authenticated */}
+            <div className="flex items-center gap-2 w-10 h-10 cursor-pointer hover:opacity-80 transition-opacity">
+              <img
+                src="/images/avatars/head.webp"
+                alt="alonso"
+                className="w-10 h-full object-cover rounded-full"
+                onClick={() => router.push("/products")}
+              />
+            </div>
+            <DownArrow
+              handleDropdown={setIsDropdownOpen}
+              dropdownOpen={isDropdownOpen}
+            />
+          </>
+        ) : (
+          <div className="flex gap-4 items-center">
+            <ProfileAvatar className="mx-auto" />
+            <p className="cursor-pointer">Log in</p>
+          </div>
+        )}
+
+        {isDropdownOpen && isAuthenticated && (
+          <div
+            className="absolute top-12 right-0 bg-white border border-[#E1DFE1] rounded-md shadow-lg min-w-[120px] z-10"
+            ref={dropdownRef}
+          >
+            <button
+              className="w-full text-xs border border-[#E1DFE1] rounded-md p-2 text-center text-[#FFFFFF] bg-[#FF4000] hover:bg-[#E63900] transition-colors cursor-pointer"
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+            >
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Cart Sidebar - Rendered outside the header flow */}
