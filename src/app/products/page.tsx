@@ -74,7 +74,7 @@ const Products = () => {
   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen w-full px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto mt-20">
+    <div className="bg-[#FFFFFF] min-h-screen w-full max-w-6xl px-6 lg:px-12 xl:px-20 mx-auto mt-20">
       <div className="relative">
         <ProductListHeader
           title="Products"
@@ -87,7 +87,7 @@ const Products = () => {
         <FilterModal modalOpen={filterModalOpen} handleFilter={handleFilter} />
         <SortModal sortModalOpen={sortModalOpen} handleSort={handleSort} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 mb-10 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 mb-10 w-full">
         {data?.data.map((product: Product) => (
           <Link href={`/products/${product.id}`} key={product.id}>
             <div className="w-full overflow-hidden  border-gray-200">
@@ -97,9 +97,9 @@ const Products = () => {
                 height={549}
                 className="w-full object-cover rounded-lg"
               />
-              <div className="mt-2 text-[#10151F] text-[18px]">
-                <div className="text-[18px] font-medium">{product.name}</div>
-                <div className="text-[16px] font-medium">$ {product.price}</div>
+              <div className="mt-2 text-sm">
+                <div className="">{product.name}</div>
+                <div className="font-semibold mt-2">$ {product.price}</div>
               </div>
             </div>
           </Link>

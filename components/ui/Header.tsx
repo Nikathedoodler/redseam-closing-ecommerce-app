@@ -51,7 +51,10 @@ const Header = () => {
   }, [isDropdownOpen]);
 
   return (
-    <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20">
+    <header
+      className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20"
+      ref={dropdownRef}
+    >
       {/* Logo Section */}
       <div className="flex items-center gap-2 ">
         <Logo />
@@ -106,10 +109,7 @@ const Header = () => {
         )}
 
         {isDropdownOpen && isAuthenticated && (
-          <div
-            className="absolute top-12 right-0 bg-white border border-[#E1DFE1] rounded-md shadow-lg min-w-[120px] z-10"
-            ref={dropdownRef}
-          >
+          <div className="absolute top-12 right-0 bg-white border border-[#E1DFE1] rounded-md shadow-lg min-w-[120px] z-10">
             <button
               className="w-full text-xs border border-[#E1DFE1] rounded-md p-2 text-center text-[#FFFFFF] bg-[#FF4000] hover:bg-[#E63900] transition-colors cursor-pointer"
               onClick={logout}

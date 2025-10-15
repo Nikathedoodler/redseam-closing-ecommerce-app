@@ -78,13 +78,13 @@ const page = () => {
   if (isError) return <div>Error: {error?.message}</div>; // Better UX
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen px-6 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 mx-auto mt-20">
+    <div className="bg-[#FFFFFF] w-full max-w-6xl min-h-screen px-6 sm:px-12 lg:px-18 mx-auto mt-20">
       <div className="text-xs sm:text-sm font-light text-[#10151F] mb-6 sm:mb-8 lg:mb-10">
         Listing / Product
       </div>
       <div className="flex flex-col lg:flex-row gap-2 sm:gap-4 lg:gap-8">
         {/* Images Section */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full lg:w-3/4">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
             {/* Thumbnails */}
             <div className="flex flex-row sm:flex-col gap-2 sm:gap-4 sm:w-20 lg:w-24">
@@ -115,7 +115,7 @@ const page = () => {
         {/* Product Info Section */}
         <div className="w-full lg:w-1/2 flex flex-col gap-4 sm:gap-6 lg:gap-10">
           <div className="flex flex-col gap-4">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-semibold text-[#10151F]">
+            <h2 className="text-xl sm:text-xl md:text-2xl xl:text-2xl font-semibold text-[#10151F]">
               {data?.name}
             </h2>
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-semibold text-[#10151F]">

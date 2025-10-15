@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../../../components/context/CartContext";
 import Link from "next/link";
 import CartLogo from "../../../components/icons/CartLogo";
@@ -11,6 +11,7 @@ const page = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [zip, setZip] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
 
   const {
     cartItems,
@@ -23,6 +24,20 @@ const page = () => {
 
   const deliveryPrice = 5;
   const total = deliveryPrice + totalPrice;
+
+  // Fix hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Show loading state until mounted
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 xl:px-16 2xl:px-20 gap-10">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   // Show empty cart message if cart is empty
   if (!cartItems.length) {
@@ -45,9 +60,9 @@ const page = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col px-6 lg:px-12 xl:px-16 2xl:px-20 gap-10">
+    <div className="min-h-screen xl:mx-auto flex flex-col px-6 lg:px-12 xl:px-16 2xl:px-32 gap-10">
       <h1 className="xl:ml-2 mx-auto text-2xl mt-30">Checkout</h1>
-      <div className="w-full md:w-3/5 md:mx-auto xl:w-full flex flex-col xl:flex-row  items-start justify-between gap-10 xl:gap-6 2xl:gap-10">
+      <div className="w-full md:w-3/5 md:mx-auto xl:w-full flex flex-col xl:flex-row items-start justify-between gap-10 xl:gap-6 2xl:gap-10">
         {/* left side - order details */}
         <div className="flex flex-col gap-10 bg-[#F8F6F7] rounded-2xl w-full xl:w-1/2 px-10 py-20">
           <div className="text-xl">Order Details</div>
