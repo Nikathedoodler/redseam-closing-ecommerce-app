@@ -3,9 +3,10 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { login } from "../../../lib/api/login";
+import { fetchLogin } from "../../../lib/api/login";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../../components/context/AuthContext";
 
 type Inputs = {
   email: string;
@@ -17,11 +18,12 @@ const Login = () => {
 
   const router = useRouter();
 
+  const { login } = useAuth();
+
   const mutation = useMutation({
-    mutationFn: login,
+    mutationFn: fetchLogin,
     onSuccess: (data) => {
-      console.log(data);
-      localStorage.setItem("authToken", data.token);
+      login(data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
       router.push("/products");
@@ -39,8 +41,6 @@ const Login = () => {
       }
     },
   });
-
-  console.log(apiErrors, "apiErrors");
 
   const {
     register,

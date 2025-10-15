@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { fetchRegister } from "../../../lib/api/Registration";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../../components/context/AuthContext";
 
 type Inputs = {
   username: string;
@@ -19,11 +19,12 @@ const register = () => {
 
   const router = useRouter();
 
+  const { login } = useAuth();
+
   const mutation = useMutation({
     mutationFn: fetchRegister,
     onSuccess: (data) => {
-      console.log(data, "onSuccess data");
-      localStorage.setItem("authToken", data.token);
+      login(data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
       router.push("./auth/login");
@@ -152,9 +153,12 @@ const register = () => {
         </form>
         <div className="flex mx-auto gap-2">
           <div>Already a member? </div>
-          <Link href={"/auth/login"}>
-            <div className="text-[#FF4000]">Login</div>
-          </Link>
+          <div
+            className="text-[#FF4000]"
+            onClick={() => router.push("/auth/login")}
+          >
+            Login
+          </div>
         </div>
       </div>
     </div>

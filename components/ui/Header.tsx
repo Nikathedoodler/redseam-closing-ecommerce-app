@@ -8,29 +8,26 @@ import ProfileAvatar from "../icons/ProfileAvatar";
 import Cart from "./Cart";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [isSigningOut, setIsSigningOut] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
-  // Fix hydration mismatch by only rendering cart badge after mount
+  const {
+    checkAuth,
+    logout,
+    isAuthenticated,
+    isDropdownOpen,
+    setIsDropdownOpen,
+  } = useAuth();
+
   useEffect(() => {
     setIsMounted(true);
-  }, []);
-
-  // Check authentication status
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("authToken");
-      console.log(token, "token");
-      setIsAuthenticated(!!token);
-    }
+    checkAuth();
   }, []);
 
   // Close dropdown when clicking outside
@@ -52,23 +49,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
-
-  const handleSignOut = () => {
-    try {
-      setIsSigningOut(true);
-      localStorage.removeItem("authToken");
-      setIsAuthenticated(false); // Update authentication state
-      router.push("/auth/login");
-      setIsDropdownOpen(false);
-    } catch (error) {
-      console.error("Error during sign out", error);
-      router.push("auth/login");
-    } finally {
-      setIsSigningOut(false);
-    }
-  };
-
-  console.log({ isMounted, isAuthenticated });
 
   return (
     <header className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20">
@@ -116,7 +96,12 @@ const Header = () => {
         ) : (
           <div className="flex gap-4 items-center">
             <ProfileAvatar className="mx-auto" />
-            <p className="cursor-pointer">Log in</p>
+            <p
+              className="cursor-pointer"
+              onClick={() => router.push("/auth/login")}
+            >
+              Log in
+            </p>
           </div>
         )}
 
@@ -127,8 +112,7 @@ const Header = () => {
           >
             <button
               className="w-full text-xs border border-[#E1DFE1] rounded-md p-2 text-center text-[#FFFFFF] bg-[#FF4000] hover:bg-[#E63900] transition-colors cursor-pointer"
-              onClick={handleSignOut}
-              disabled={isSigningOut}
+              onClick={logout}
             >
               Sign Out
             </button>
