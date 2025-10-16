@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { fetchRegister } from "../../../lib/api/Registration";
@@ -12,6 +13,13 @@ type Inputs = {
   email: string;
   password: string;
   confirmPassword: string;
+};
+
+type ApiError = {
+  response: {
+    status: number;
+    data: Record<string, string> | { message: string };
+  };
 };
 
 const Register = () => {
@@ -29,13 +37,13 @@ const Register = () => {
 
       router.push("./auth/login");
     },
-    onError: (error: unknown) => {
+    onError: (error: ApiError) => {
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
       } else if (error?.response?.status === 401) {
-        const errors = error.response.data.message;
-        setApiErrors(errors);
+        const message = error.response.data.message || "Unauthorized access.";
+        setApiErrors({ general: message });
       } else {
         setApiErrors({ general: "Something went wrong. Please try again." });
       }
@@ -70,11 +78,12 @@ const Register = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="hidden lg:block lg:w-1/2 h-full overflow-hidden">
-        <img
+      <div className="hidden lg:block lg:w-1/2 h-full overflow-hidden relative">
+        <Image
           src="/images/loginImage.jpeg"
-          alt=""
-          className="w-full h-full object-cover object-[50%_-20%]"
+          alt="Register"
+          fill
+          className="object-cover object-[50%_-20%]"
         />
       </div>
       <div className="w-full max-w-2xl m-auto flex flex-col px-20 py-10 gap-10">

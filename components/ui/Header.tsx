@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import Logo from "../icons/Logo";
 import CartBlack from "../icons/CartBlack";
 import DownArrow from "../icons/DownArrow";
@@ -87,9 +88,11 @@ const Header = () => {
           <>
             {/* User Profile - Only show when authenticated */}
             <div className="flex items-center gap-2 w-10 h-10 cursor-pointer hover:opacity-80 transition-opacity">
-              <img
+              <Image
                 src="/images/avatars/head.webp"
                 alt="alonso"
+                width={40}
+                height={40}
                 className="w-10 h-full object-cover rounded-full"
                 onClick={() => router.push("/products")}
               />
