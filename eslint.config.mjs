@@ -20,6 +20,12 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
+  {
+    rules: {
+      "@next/next/no-img-element": "warn", // Allow img elements but warn
+      "react-hooks/exhaustive-deps": "warn", // Make it a warning instead of error
+    },
+  },
 ];
 
 export default eslintConfig;

@@ -14,8 +14,8 @@ type Inputs = {
   confirmPassword: string;
 };
 
-const register = () => {
-  const [apiErrors, setApiErrors] = useState<any>({});
+const Register = () => {
+  const [, setApiErrors] = useState<Record<string, string>>({});
 
   const router = useRouter();
 
@@ -29,7 +29,7 @@ const register = () => {
 
       router.push("./auth/login");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
@@ -164,4 +164,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

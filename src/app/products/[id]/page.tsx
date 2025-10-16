@@ -9,7 +9,7 @@ import ProductSkeleton from "../../../../components/ui/ProductSkeleton";
 import Cart from "../../../../components/ui/Cart";
 import { useCart, CartItem } from "../../../../components/context/CartContext";
 
-const page = () => {
+const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null | undefined>(
     null
@@ -18,7 +18,7 @@ const page = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   // const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
-  const { isCartOpen, setIsCartOpen, addToCart } = useCart();
+  const { addToCart } = useCart();
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -213,4 +213,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProductDetail;
