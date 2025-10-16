@@ -7,6 +7,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import Link from "next/link";
+import Image from "next/image";
 import { Product } from "../types";
 import { ProductsResponse } from "../types";
 import { useEffect, useState } from "react";
@@ -45,7 +46,7 @@ const Products = () => {
           fetchProducts({ page: nextPage, filter: filteredPrice, sort }),
       });
     }
-  }, [page, filteredPrice, sort, data?.meta.last_page]);
+  }, [page, filteredPrice, sort, data?.meta.last_page, queryClient]);
 
   const handleFilter = (filter: { price_from: number; price_to: number }) => {
     setFilterModalOpen(false);
@@ -89,9 +90,10 @@ const Products = () => {
         {data?.data.map((product: Product) => (
           <Link href={`/products/${product.id}`} key={product.id}>
             <div className="w-full overflow-hidden  border-gray-200">
-              <img
+              <Image
                 src={product.cover_image}
                 alt={product.name}
+                width={400}
                 height={549}
                 className="w-full object-cover rounded-lg"
               />

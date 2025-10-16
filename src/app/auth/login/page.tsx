@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { fetchLogin } from "../../../lib/api/login";
@@ -13,10 +14,10 @@ type Inputs = {
   password: string;
 };
 
-type Error = {
+type ApiError = {
   response: {
     status: number;
-    data: {};
+    data: Record<string, string>;
   };
 };
 
@@ -35,7 +36,7 @@ const Login = () => {
 
       router.push("/products");
     },
-    onError: (error: Error) => {
+    onError: (error: ApiError) => {
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
@@ -65,11 +66,12 @@ const Login = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="hidden lg:block lg:w-1/2 h-full overflow-hidden">
-        <img
+      <div className="hidden lg:block lg:w-1/2 h-full overflow-hidden relative">
+        <Image
           src="/images/loginImage.jpeg"
-          alt=""
-          className="object-[50%_-20%]  w-full h-full object-cover"
+          alt="Login"
+          fill
+          className="object-[50%_-20%] object-cover"
         />
       </div>
       <div className="w-full max-w-2xl m-auto flex flex-col px-20 py-10 gap-10">

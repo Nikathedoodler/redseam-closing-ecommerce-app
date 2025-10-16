@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useCart } from "../../../components/context/CartContext";
 import Link from "next/link";
 import CartLogo from "../../../components/icons/CartLogo";
@@ -113,9 +114,11 @@ const Checkout = () => {
                   key={item.id}
                 >
                   <div className="flex items-stretch gap-4">
-                    <img
+                    <Image
                       src={item.cover_image}
-                      alt=""
+                      alt={item.name}
+                      width={100}
+                      height={100}
                       className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl p-4"
                     />
                     <div className="flex-1 flex flex-col justify-between p-2">

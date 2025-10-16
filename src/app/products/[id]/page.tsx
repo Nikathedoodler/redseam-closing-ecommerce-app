@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchProduct } from "@/lib/api/products";
@@ -18,7 +19,7 @@ const ProductDetail = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   // const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -87,10 +88,12 @@ const ProductDetail = () => {
             {/* Thumbnails */}
             <div className="flex flex-row sm:flex-col gap-2 sm:gap-4 sm:w-20 lg:w-24">
               {data?.images.map((img: string, index: number) => (
-                <img
+                <Image
                   key={img}
                   src={img}
-                  alt={img}
+                  alt={`Product image ${index + 1}`}
+                  width={96}
+                  height={96}
                   className="w-16 h-16 sm:w-full sm:h-20 lg:h-24 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => handleSelectedImage(img, index)}
                 />
@@ -98,11 +101,13 @@ const ProductDetail = () => {
             </div>
 
             {/* Main Image */}
-            <div className="flex-1">
+            <div className="flex-1 relative">
               {selectedImage && (
-                <img
+                <Image
                   src={selectedImage}
-                  alt={data?.name}
+                  alt={data?.name || "Product image"}
+                  width={600}
+                  height={600}
                   className="w-full max-h-96 sm:max-h-[500px] lg:max-h-[600px] object-contain rounded-lg"
                 />
               )}
@@ -195,9 +200,11 @@ const ProductDetail = () => {
               <p className="text-[#10151F] text-lg sm:text-xl lg:text-2xl font-medium">
                 Details
               </p>
-              <img
-                src={data?.brand?.image}
-                alt={data?.brand?.name}
+              <Image
+                src={data?.brand?.image || ""}
+                alt={data?.brand?.name || "Brand"}
+                width={112}
+                height={64}
                 className="w-20 h-12 sm:w-24 sm:h-14 lg:w-28 lg:h-16 object-contain"
               />
             </div>
