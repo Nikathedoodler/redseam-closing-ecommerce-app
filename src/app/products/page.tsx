@@ -35,8 +35,6 @@ const Products = () => {
     }
   );
 
-  console.log(data, "data");
-
   // Prefetch next page when user is on current page
   useEffect(() => {
     if (page < (data?.meta.last_page || 0)) {

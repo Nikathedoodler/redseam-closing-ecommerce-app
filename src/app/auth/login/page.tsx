@@ -29,7 +29,6 @@ const Login = () => {
       router.push("/products");
     },
     onError: (error: any) => {
-      console.log(error, "error");
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
@@ -66,14 +65,14 @@ const Login = () => {
           className="object-[50%_-20%]  w-full h-full object-cover"
         />
       </div>
-      <div className="w-full md:w-2/3 lg:w-1/2 m-auto flex flex-col px-20 py-10 gap-10">
+      <div className="w-full max-w-2xl m-auto flex flex-col px-20 py-10 gap-10">
         <h1 className="text-3xl">Log in</h1>
-        <form className="flex flex-col gap-6" onSubmit={handleSubmit(submit)}>
-          <div className="relative w-full border-2 border-[#E1DFE1] rounded-lg">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(submit)}>
+          <div>
             <input
               placeholder="Email"
               type="email"
-              className="p-2 rounded-lg mb-2 placeholder-[#3E424A] w-full"
+              className="p-2 rounded-lg mb-2 placeholder-[#3E424A] w-full relative border-2 border-[#E1DFE1]"
               {...register("email", {
                 required: "This field is required",
                 pattern: {
@@ -87,7 +86,7 @@ const Login = () => {
             </span> */}
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
-          <div className="relative rounded-lg">
+          <div className="relative">
             <input
               placeholder="Password"
               type="password"
@@ -99,11 +98,7 @@ const Login = () => {
             </span> */}
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
-          {apiErrors && (
-            <p className="text-red-500 text-md font-semibold mx-auto">
-              {apiErrors.message}
-            </p>
-          )}
+
           <button
             className="w-full py-2 lg:py-3 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200"
             type="submit"
@@ -111,7 +106,12 @@ const Login = () => {
             Log in
           </button>
         </form>
-        <div className="flex mx-auto gap-2">
+        {apiErrors && (
+          <p className="text-red-500 text-md font-semibold mx-auto">
+            {apiErrors.message}
+          </p>
+        )}
+        <div className="flex mx-auto gap-2 -mt-12">
           <div>Not a member? </div>
           <Link href={"/auth/register"}>
             <div className="text-[#FF4000]">Register</div>

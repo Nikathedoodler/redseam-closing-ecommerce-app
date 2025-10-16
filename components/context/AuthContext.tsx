@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("authToken");
       setIsAuthenticated(!!token);
-      console.log(isAuthenticated, "isAuthenticated");
     }
   };
 

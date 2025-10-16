@@ -60,14 +60,14 @@ const page = () => {
   }
 
   return (
-    <div className="min-h-screen xl:mx-auto flex flex-col px-6 lg:px-12 xl:px-16 2xl:px-32 gap-10">
+    <div className="min-h-screen max-w-7xl xl:mx-auto flex flex-col px-6 lg:px-12 gap-10">
       <h1 className="xl:ml-2 mx-auto text-2xl mt-30">Checkout</h1>
-      <div className="w-full md:w-3/5 md:mx-auto xl:w-full flex flex-col xl:flex-row items-start justify-between gap-10 xl:gap-6 2xl:gap-10">
+      <div className="w-full md:mx-auto flex flex-col lg:flex-row items-start justify-between gap-10 xl:gap-6">
         {/* left side - order details */}
         <div className="flex flex-col gap-10 bg-[#F8F6F7] rounded-2xl w-full xl:w-1/2 px-10 py-20">
           <div className="text-xl">Order Details</div>
           <div className="flex flex-col gap-10">
-            <div className="flex gap-6 w-full xl:w-4/5">
+            <div className="flex gap-6 w-full">
               <input
                 placeholder="name"
                 value={firstName}
@@ -85,9 +85,9 @@ const page = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-[#FFFFFF] placeholder-[#3E424A] w-full xl:w-4/5 p-2 rounded-lg border-2 border-[#E1DFE1]"
+              className="bg-[#FFFFFF] placeholder-[#3E424A] w-full p-2 rounded-lg border-2 border-[#E1DFE1]"
             />
-            <div className="flex gap-6 w-full xl:w-4/5">
+            <div className="flex gap-6 w-full">
               <input
                 placeholder="Address"
                 value={address}
@@ -182,7 +182,7 @@ const page = () => {
                   className="mx-auto w-full"
                   onClick={() => clearCart()}
                 >
-                  <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+                  <button className="w-full py-4 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
                     Pay
                   </button>
                 </Link>

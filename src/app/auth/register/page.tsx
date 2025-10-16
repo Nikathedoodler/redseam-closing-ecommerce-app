@@ -30,7 +30,6 @@ const register = () => {
       router.push("./auth/login");
     },
     onError: (error: any) => {
-      console.log(error, "error");
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
@@ -78,14 +77,14 @@ const register = () => {
           className="w-full h-full object-cover object-[50%_-20%]"
         />
       </div>
-      <div className="w-full md:w-2/3 lg:w-1/2 m-auto flex flex-col px-20 py-10 gap-10">
+      <div className="w-full max-w-2xl m-auto flex flex-col px-20 py-10 gap-10">
         <h1 className="text-3xl">Registration</h1>
-        <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-2">
             <input
               placeholder="Username"
               type="text"
-              className="w-full mb-2"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("username", {
                 required: "this field is required",
                 minLength: {
@@ -97,11 +96,11 @@ const register = () => {
             <p className="text-red-500 text-sm">{errors.username?.message}</p>
           </div>
 
-          <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
+          <div className="flex flex-col gap-2">
             <input
               placeholder="Email"
               type="email"
-              className="w-full mb-2"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("email", {
                 required: "This field is required",
                 pattern: {
@@ -113,11 +112,11 @@ const register = () => {
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
 
-          <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
+          <div className="flex flex-col gap-2">
             <input
               placeholder="Password"
               type="password"
-              className="w-full mb-2"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("password", {
                 required: "This field is required",
                 minLength: {
@@ -129,11 +128,11 @@ const register = () => {
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
 
-          <div className="border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]">
+          <div className="flex flex-col gap-2">
             <input
               placeholder="Confirm Password"
               type="password"
-              className="w-full mb-2"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
               {...register("confirmPassword", {
                 required: "This field is required",
                 validate: (value) =>
@@ -154,7 +153,7 @@ const register = () => {
         <div className="flex mx-auto gap-2">
           <div>Already a member? </div>
           <div
-            className="text-[#FF4000]"
+            className="text-[#FF4000] cursor-pointer"
             onClick={() => router.push("/auth/login")}
           >
             Login

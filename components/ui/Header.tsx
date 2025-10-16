@@ -52,11 +52,14 @@ const Header = () => {
 
   return (
     <header
-      className="w-full fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20"
+      className="w-full max-w-6xl mx-auto fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20"
       ref={dropdownRef}
     >
       {/* Logo Section */}
-      <div className="flex items-center gap-2 ">
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={() => router.push("/products")}
+      >
         <Logo />
         <h1 className="font-[600] text-sm sm:text-base lg:text-lg text-[#10151F]">
           RedSeam Clothing
