@@ -25,7 +25,6 @@ const ProductListHeader = ({
   sortModalOpen,
   setSortModalOpen,
 }: ProductListHeaderProps) => {
-  console.log(productCount, "productCount");
   return (
     <div className="sticky top-40 z-40 bg-white flex items-center justify-between mb-4">
       <div>

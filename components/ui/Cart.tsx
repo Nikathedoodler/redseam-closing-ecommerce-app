@@ -29,7 +29,6 @@ const Cart = ({ className }: CartProps) => {
     setIsMounted(true);
   }, []);
 
-  console.log(cartItems, "cartItems");
   return (
     <>
       {/* Backdrop Overlay */}

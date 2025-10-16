@@ -51,8 +51,6 @@ const page = () => {
       ? Array.from({ length: maxQuantity }, (_, i) => i + 1)
       : [1];
 
-  console.log(data, "data in product page");
-
   const handleAddToCart = () => {
     if (!data) {
       console.error("No product data available");
