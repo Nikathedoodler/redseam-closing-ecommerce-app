@@ -28,7 +28,7 @@ const Header = () => {
   useEffect(() => {
     setIsMounted(true);
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -48,7 +48,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, setIsDropdownOpen]);
 
   return (
     <header

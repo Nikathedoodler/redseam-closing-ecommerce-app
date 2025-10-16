@@ -16,7 +16,6 @@ export const createPaginationArray = (
   }
 
   // Determine ranges
-  const showEllipsis = totalPages > 7;
   const showAroundCurrent = 2; // pages to show around current
 
   // Calculate ranges

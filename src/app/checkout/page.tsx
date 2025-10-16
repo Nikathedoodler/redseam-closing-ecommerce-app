@@ -5,7 +5,7 @@ import { useCart } from "../../../components/context/CartContext";
 import Link from "next/link";
 import CartLogo from "../../../components/icons/CartLogo";
 
-const page = () => {
+const Checkout = () => {
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ const page = () => {
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="text-[24px] font-[600] text-[#10151F]">Ooops!</div>
           <div className="text-[14px] font-[400] text-[#10151F]">
-            You've got nothing in your cart just yet...
+            You&apos;ve got nothing in your cart just yet...
           </div>
         </div>
         <Link href="/products" className="w-1/3 sm:w-1/2 lg:w-2/5">
@@ -195,4 +195,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Checkout;

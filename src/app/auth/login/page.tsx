@@ -14,7 +14,7 @@ type Inputs = {
 };
 
 const Login = () => {
-  const [apiErrors, setApiErrors] = useState<any>({});
+  const [apiErrors, setApiErrors] = useState<Record<string, string>>({});
 
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const Login = () => {
 
       router.push("/products");
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       if (error?.response?.status === 422) {
         const errors = error.response.data;
         setApiErrors(errors);
