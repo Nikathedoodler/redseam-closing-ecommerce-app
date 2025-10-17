@@ -4,6 +4,7 @@ import { TankstackProvider } from "../../components/providers/tankstack-provider
 import Header from "../../components/ui/Header";
 import { CartProvider } from "../../components/context/CartContext";
 import { AuthProvider } from "../../components/context/AuthContext";
+import { ThemeProvider } from "../../components/context/ThemeContext";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -30,14 +31,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable}`}>
       <body className={`${poppins.className} font-poppins`}>
-        <AuthProvider>
-          <CartProvider>
-            <Header />
-            <TankstackProvider>
-              <main>{children}</main>
-            </TankstackProvider>
-          </CartProvider>
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <CartProvider>
+              <Header />
+              <TankstackProvider>
+                <main>{children}</main>
+              </TankstackProvider>
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

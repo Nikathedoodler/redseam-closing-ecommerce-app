@@ -10,6 +10,8 @@ import Cart from "./Cart";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "../icons/ThemeToggle";
 
 const Header = () => {
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
@@ -51,6 +53,8 @@ const Header = () => {
     };
   }, [isDropdownOpen, setIsDropdownOpen]);
 
+  const { isDark, toggleTheme } = useTheme();
+
   return (
     <header
       className="w-full max-w-6xl mx-auto fixed top-0 left-0 right-0 z-50  bg-white flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20"
@@ -69,6 +73,7 @@ const Header = () => {
 
       {/* Cart and User Profile Section */}
       <div className="flex items-center gap-5 relative">
+        <ThemeToggle toggleTheme={toggleTheme} isDark={isDark} />
         {isMounted && isAuthenticated && (
           <div className="relative">
             <CartBlack
