@@ -55,7 +55,6 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (!data) {
-      console.error("No product data available");
       return;
     }
 

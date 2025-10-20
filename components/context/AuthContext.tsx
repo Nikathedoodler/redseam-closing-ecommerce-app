@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsAuthenticated(false);
       setIsDropdownOpen(false);
     } catch (error) {
-      console.error("Error signing out", error);
+      // Handle error silently or add proper error handling
     } finally {
       setIsAuthenticated(false);
     }

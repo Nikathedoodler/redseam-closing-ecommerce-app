@@ -91,8 +91,16 @@ const Products = () => {
           setSortModalOpen={setSortModalOpen}
           isDark={isDark}
         />
-        <FilterModal modalOpen={filterModalOpen} handleFilter={handleFilter} />
-        <SortModal sortModalOpen={sortModalOpen} handleSort={handleSort} />
+        <FilterModal
+          modalOpen={filterModalOpen}
+          setFilterModalOpen={setFilterModalOpen}
+          handleFilter={handleFilter}
+        />
+        <SortModal
+          sortModalOpen={sortModalOpen}
+          handleSort={handleSort}
+          setSortModalOpen={setSortModalOpen}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 mb-10 w-full">
         {data?.data.map((product: Product) => (

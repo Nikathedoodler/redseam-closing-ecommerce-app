@@ -16,7 +16,7 @@ import ThemeToggle from "../icons/ThemeToggle";
 const Header = () => {
   const { isCartOpen, totalItems, setIsCartOpen } = useCart();
   const [isMounted, setIsMounted] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLElement>(null);
 
   const router = useRouter();
 
