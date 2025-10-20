@@ -11,11 +11,12 @@ const FilterModal = ({
     price_from: 0,
     price_to: 0,
   });
+
+  const filterRef = useRef<HTMLDivElement>(null);
+
   if (!modalOpen) {
     return null;
   }
-
-  const filterRef = useRef<HTMLDivElement>(null);
 
   return (
     <div

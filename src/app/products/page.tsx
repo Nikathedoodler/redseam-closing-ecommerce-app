@@ -16,6 +16,7 @@ import ProductListHeader from "../../../components/ui/ProductListHeader";
 import FilterModal from "../../../components/ui/FilterModal";
 import SortModal from "../../../components/ui/SortModal";
 import ProductsListSkeleton from "../../../components/ui/ProductsListSkeleton";
+import { useTheme } from "../../../components/context/ThemeContext";
 
 const Products = () => {
   const [page, setPage] = useState(1);
@@ -23,6 +24,8 @@ const Products = () => {
   const [sortModalOpen, setSortModalOpen] = useState(false);
   const [filteredPrice, setFilteredPrice] = useState({});
   const [sort, setSort] = useState("");
+
+  const { isDark } = useTheme();
 
   const queryClient = useQueryClient();
 
@@ -73,7 +76,11 @@ const Products = () => {
   if (isError) return <div>Error: {error?.message}</div>;
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen w-full max-w-6xl px-6 lg:px-12 xl:px-20 mx-auto mt-20">
+    <div
+      className={`bg-[#FFFFFF] min-h-screen w-full max-w-6xl px-6 lg:px-12 xl:px-20 mx-auto mt-20 ${
+        isDark ? "bg-slate-800 text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="relative">
         <ProductListHeader
           title="Products"
@@ -82,6 +89,7 @@ const Products = () => {
           setModalOpen={setFilterModalOpen}
           sortModalOpen={sortModalOpen}
           setSortModalOpen={setSortModalOpen}
+          isDark={isDark}
         />
         <FilterModal modalOpen={filterModalOpen} handleFilter={handleFilter} />
         <SortModal sortModalOpen={sortModalOpen} handleSort={handleSort} />
@@ -105,7 +113,12 @@ const Products = () => {
           </Link>
         ))}
       </div>
-      <Pagination page={page} onPageChange={setPage} totalPages={totalPages} />
+      <Pagination
+        page={page}
+        onPageChange={setPage}
+        totalPages={totalPages}
+        isDark={isDark}
+      />
     </div>
   );
 };

@@ -4,12 +4,15 @@ import CartLogo from "../icons/CartLogo";
 import CloseButton from "../icons/CloseButton";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
+import { useTheme } from "../context/ThemeContext";
 
 type CartProps = {
   className?: string;
 };
 
 const Cart = ({ className }: CartProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
   const {
     isCartOpen,
     setIsCartOpen,
@@ -21,7 +24,12 @@ const Cart = ({ className }: CartProps) => {
     removeFromCart,
   } = useCart();
 
-  const [isMounted, setIsMounted] = useState(false);
+  const { isDark } = useTheme();
+
+  const ThemeCondition = isDark
+    ? "bg-slate-800 text-white"
+    : "bg-[#FFFFFF] text-[#10151F]";
+
   const deliveryPrice = 5;
   const total = deliveryPrice + totalPrice;
 
@@ -36,7 +44,7 @@ const Cart = ({ className }: CartProps) => {
       <div
         className={`fixed inset-0 bg-black z-40 transition-opacity duration-300 ${
           isCartOpen
-            ? "bg-opacity-50 opacity-70"
+            ? "bg-opacity-50 opacity-60"
             : "bg-opacity-0 opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsCartOpen(false)}
@@ -44,12 +52,12 @@ const Cart = ({ className }: CartProps) => {
 
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-full flex flex-col overflow-scroll gap-10 sm:w-[500px] xl:w-[600px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full flex flex-col overflow-y-auto gap-10 sm:w-[500px] xl:w-[600px] ${ThemeCondition} shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         } ${className}`}
       >
         <div className="flex justify-between items-center p-4 mt-4">
-          <h1 className="text-[20px] font-[500] text-[#10151F]">
+          <h1 className={`text-[20px] font-[500] ${ThemeCondition}`}>
             Shopping Cart {isMounted && `(${totalItems})`}
           </h1>
           <CloseButton onClick={() => setIsCartOpen(false)} />
@@ -79,9 +87,9 @@ const Cart = ({ className }: CartProps) => {
           </div>
         )}
         {/* renders when there are items in the */}
-        {isMounted && (
-          <div className="flex flex-col justify-between h-full px-6 gap-10">
-            <div className="flex flex-col items-stretch gap-6">
+        {isMounted && cartItems.length > 0 && (
+          <div className="flex flex-col justify-between h-full px-6 gap-10 pb-6">
+            <div className="flex flex-col items-stretch gap-6 flex-1 overflow-y-auto">
               {cartItems.map((item) => (
                 <div
                   className="flex flex-col justify-between items-strech"
@@ -93,7 +101,7 @@ const Cart = ({ className }: CartProps) => {
                       alt={item.name}
                       width={100}
                       height={100}
-                      className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl p-4"
+                      className="border border-[#E1DFE1] w-1/4 object-cover rounded-xl"
                     />
                     <div className="flex-1 flex flex-col justify-between p-2">
                       <div className="text-md font-[500]">{item.name}</div>
@@ -138,29 +146,27 @@ const Cart = ({ className }: CartProps) => {
                 </div>
               ))}
             </div>
-            {isMounted && cartItems.length && (
-              <div className="flex flex-col gap-10 mb-10">
-                <div className="flex flex-col gap-4 px-2">
-                  <div className="flex items-center justify-between">
-                    <div>Items subtotal</div>
-                    <div>$ {totalPrice}</div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>Delivery</div>
-                    <div>$ {deliveryPrice}</div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>Total</div>
-                    <div>$ {total}</div>
-                  </div>
+            <div className="flex flex-col gap-10 mt-auto">
+              <div className="flex flex-col gap-4 px-2">
+                <div className="flex items-center justify-between">
+                  <div>Items subtotal</div>
+                  <div>$ {totalPrice}</div>
                 </div>
-                <Link href={"/checkout"} onClick={() => setIsCartOpen(false)}>
-                  <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
-                    Go To Checkout
-                  </button>
-                </Link>
+                <div className="flex items-center justify-between">
+                  <div>Delivery</div>
+                  <div>$ {deliveryPrice}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>Total</div>
+                  <div>$ {total}</div>
+                </div>
               </div>
-            )}
+              <Link href={"/checkout"} onClick={() => setIsCartOpen(false)}>
+                <button className="w-full py-4 sm:py-5 lg:py-6 bg-[#FF4000] text-[#FFFFFF] text-base sm:text-lg lg:text-xl rounded-xl cursor-pointer hover:bg-[#E63900] transition-colors duration-200">
+                  Go To Checkout
+                </button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
