@@ -166,7 +166,9 @@ const ProductDetail = () => {
                   onClick={() => setSelectedSize(size)}
                   className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full border cursor-pointer transition-all duration-200 text-sm sm:text-base ${
                     selectedSize === size
-                      ? "border-[#10151F] bg-[#F8F6F7]"
+                      ? isDark
+                        ? "bg-[#FF4000]"
+                        : "border-[#10151F] bg-[#F8F6F7]"
                       : "border-gray-200 hover:border-gray-400"
                   }`}
                 >

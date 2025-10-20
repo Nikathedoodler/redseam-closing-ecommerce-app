@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const FilterModal = ({
   modalOpen,
@@ -14,19 +15,24 @@ const FilterModal = ({
 
   const filterRef = useRef<HTMLDivElement>(null);
 
+  const { isDark } = useTheme();
+  const themeCondition = isDark
+    ? "bg-slate-800 text-white"
+    : "bg-white text-black";
+
   if (!modalOpen) {
     return null;
   }
 
   return (
     <div
-      className="flex flex-col absolute top-full sm:right-4 md:right-8 lg:right-12 z-10 gap-4 w-[392px] h-[169px] bg-[#FFFFFF] border border-[#E1DFE1] rounded-[8px] p-4"
+      className={`flex flex-col absolute top-full sm:right-4 md:right-8 lg:right-12 z-10 gap-4 w-[392px] h-[169px] bg-[#FFFFFF] border ${themeCondition} rounded-[8px] p-4`}
       ref={filterRef}
     >
-      <p className="text-[16px] font-semibold text-[#10151F]">Select Price</p>
+      <p className="text-[16px] font-semibold">Select Price</p>
       <div className="flex items-center gap-2 w-full">
         <div className="flex items-center w-full gap-2 border border-[#E1DFE1] rounded-[8px] p-2 h-[42px]">
-          <div className="text-[14px] font-medium text-[#3E424A]">From</div>
+          <div className="text-[14px] font-medium">From</div>
           <input
             className="w-full"
             value={filter.price_from}
@@ -36,7 +42,7 @@ const FilterModal = ({
           />
         </div>
         <div className="flex items-center w-full gap-2 border border-[#E1DFE1] rounded-[8px] p-2 h-[42px]">
-          <div className="text-[14px] font-medium text-[#3E424A]">To</div>
+          <div className="text-[14px] font-medium">To</div>
           <input
             className="w-full"
             value={filter.price_to}
