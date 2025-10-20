@@ -6,12 +6,14 @@ type PaginationProps = {
   page: number;
   totalPages?: number;
   onPageChange: (page: number) => void;
+  isDark: boolean;
 };
 
 export const Pagination = ({
   page,
   totalPages,
   onPageChange,
+  isDark,
 }: PaginationProps) => {
   const paginationItems = createPaginationArray(page, totalPages || 0);
 
@@ -37,6 +39,8 @@ export const Pagination = ({
             className={`w-[32px] h-[32px] rounded-[4px] border-1 border-[#F8F6F7] flex items-center justify-center cursor-pointer ${
               item === page
                 ? "border-[#FF4000] text-[#FF4000]"
+                : isDark
+                ? "text-white"
                 : "text-[#212B36]"
             }`}
           >

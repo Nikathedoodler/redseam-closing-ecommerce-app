@@ -9,6 +9,7 @@ import { ProductResponse } from "../../types";
 import ProductSkeleton from "../../../../components/ui/ProductSkeleton";
 import Cart from "../../../../components/ui/Cart";
 import { useCart, CartItem } from "../../../../components/context/CartContext";
+import { useTheme } from "../../../../components/context/ThemeContext";
 
 const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -17,9 +18,9 @@ const ProductDetail = () => {
   );
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  // const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   const { addToCart, setIsCartOpen } = useCart();
+  const { isDark } = useTheme();
 
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery<ProductResponse, Error>({
@@ -73,12 +74,20 @@ const ProductDetail = () => {
     addToCart(itemData);
   };
 
+  const ThemeCondition = isDark
+    ? "bg-slate-800 text-white"
+    : "bg-[#FFFFFF] text-[#10151F]";
+
   if (isLoading) return <ProductSkeleton />; // Better UX
   if (isError) return <div>Error: {error?.message}</div>; // Better UX
 
   return (
-    <div className="bg-[#FFFFFF] w-full max-w-6xl min-h-screen px-6 sm:px-12 lg:px-18 mx-auto mt-20">
-      <div className="text-xs sm:text-sm font-light text-[#10151F] mb-6 sm:mb-8 lg:mb-10">
+    <div
+      className={`w-full max-w-6xl min-h-screen px-6 sm:px-12 lg:px-18 mx-auto mt-20 ${ThemeCondition}`}
+    >
+      <div
+        className={`text-xs sm:text-sm font-light mb-6 sm:mb-8 lg:mb-10 ${ThemeCondition}`}
+      >
         Listing / Product
       </div>
       <div className="flex flex-col lg:flex-row gap-2 sm:gap-4 lg:gap-8">
@@ -118,15 +127,19 @@ const ProductDetail = () => {
         {/* Product Info Section */}
         <div className="w-full lg:w-1/2 flex flex-col gap-4 sm:gap-6 lg:gap-10">
           <div className="flex flex-col gap-4">
-            <h2 className="text-xl sm:text-xl md:text-2xl xl:text-2xl font-semibold text-[#10151F]">
+            <h2
+              className={`text-xl sm:text-xl md:text-2xl xl:text-2xl font-semibold ${ThemeCondition}`}
+            >
               {data?.name}
             </h2>
-            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-semibold text-[#10151F]">
+            <p
+              className={`text-lg sm:text-xl lg:text-2xl xl:text-3xl font-semibold ${ThemeCondition}`}
+            >
               $ {data?.price}
             </p>
           </div>
           <div className="flex flex-col gap-4">
-            <p className="text-[#10151F] text-sm sm:text-base lg:text-lg">
+            <p className={`text-sm sm:text-base lg:text-lg ${ThemeCondition}`}>
               Color: {selectedColor}
             </p>
             <div className="flex gap-2 flex-wrap">
@@ -134,10 +147,8 @@ const ProductDetail = () => {
                 <button
                   key={color}
                   onClick={() => handleColorChange(color, index)}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full border-2 cursor-pointer transition-all duration-200 ${
-                    selectedColor === color
-                      ? "border-[#10151F] scale-110"
-                      : "border-gray-300 hover:border-gray-500"
+                  className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full border-1 cursor-pointer transition-all duration-200 ${
+                    selectedColor === color ? "scale-110" : ""
                   }`}
                   style={{ backgroundColor: color }}
                 />
@@ -145,7 +156,7 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <p className="text-[#10151F] text-sm sm:text-base lg:text-lg">
+            <p className={`text-sm sm:text-base lg:text-lg ${ThemeCondition}`}>
               Size: {selectedSize}
             </p>
             <div className="flex gap-2 flex-wrap">
@@ -165,7 +176,7 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <p className="text-[#10151F] text-sm sm:text-base lg:text-lg">
+            <p className={`text-sm sm:text-base lg:text-lg ${ThemeCondition}`}>
               Quantity
             </p>
             <div className="flex gap-2">
@@ -197,7 +208,9 @@ const ProductDetail = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <p className="text-[#10151F] text-lg sm:text-xl lg:text-2xl font-medium">
+              <p
+                className={`text-lg sm:text-xl lg:text-2xl font-medium ${ThemeCondition}`}
+              >
                 Details
               </p>
               <Image

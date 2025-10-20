@@ -30,15 +30,27 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("darkMode", isDark.toString());
 
       // Apply dark class to html element
+      console.log("Setting theme to:", isDark ? "dark" : "light");
+      const htmlElement = document.documentElement;
+
       if (isDark) {
-        document.documentElement.classList.add("dark");
+        htmlElement.classList.add("dark");
+        console.log(
+          "Added 'dark' class to html. Current classes:",
+          htmlElement.className
+        );
       } else {
-        document.documentElement.classList.remove("dark");
+        htmlElement.classList.remove("dark");
+        console.log(
+          "Removed 'dark' class from html. Current classes:",
+          htmlElement.className
+        );
       }
     }
   }, [isDark]);
 
   const toggleTheme = () => {
+    console.log("Toggling theme from:", isDark, "to:", !isDark);
     setIsDark(!isDark);
   };
 
