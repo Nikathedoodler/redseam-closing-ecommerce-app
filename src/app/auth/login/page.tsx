@@ -81,7 +81,7 @@ const Login = () => {
             <input
               placeholder="Email"
               type="email"
-              className="p-2 rounded-lg mb-2 placeholder-[#3E424A] w-full relative border-2 border-[#E1DFE1]"
+              className="p-2 rounded-lg mb-2 w-full relative border-2 border-[#E1DFE1]"
               {...register("email", {
                 required: "This field is required",
                 pattern: {
@@ -99,7 +99,7 @@ const Login = () => {
             <input
               placeholder="Password"
               type="password"
-              className="w-full border-2 mb-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
+              className="w-full border-2 mb-2 border-[#E1DFE1] p-2 rounded-lg"
               {...register("password", { required: "This field is required" })}
             />
             {/* <span className="text-[#FF4000] absolute left-24 top-1/2 -translate-y-1/2 pointer-events-none">

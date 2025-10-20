@@ -93,7 +93,7 @@ const Register = () => {
             <input
               placeholder="Username"
               type="text"
-              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg"
               {...register("username", {
                 required: "this field is required",
                 minLength: {
@@ -109,7 +109,7 @@ const Register = () => {
             <input
               placeholder="Email"
               type="email"
-              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg"
               {...register("email", {
                 required: "This field is required",
                 pattern: {
@@ -125,7 +125,7 @@ const Register = () => {
             <input
               placeholder="Password"
               type="password"
-              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg"
               {...register("password", {
                 required: "This field is required",
                 minLength: {
@@ -141,7 +141,7 @@ const Register = () => {
             <input
               placeholder="Confirm Password"
               type="password"
-              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg placeholder-[#3E424A]"
+              className="w-full border-2 border-[#E1DFE1] p-2 rounded-lg"
               {...register("confirmPassword", {
                 required: "This field is required",
                 validate: (value) =>

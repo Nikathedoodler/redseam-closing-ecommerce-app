@@ -54,12 +54,13 @@ const Header = () => {
   }, [isDropdownOpen, setIsDropdownOpen]);
 
   const { isDark, toggleTheme } = useTheme();
+  const themeCondition = isDark
+    ? "bg-slate-800 text-white"
+    : "bg-white text-black";
 
   return (
     <header
-      className={`w-full max-w-6xl mx-auto fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20 ${
-        isDark ? "bg-slate-800 text-white" : "bg-white text-black"
-      }`}
+      className={`w-full mx-auto fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-4 px-6 lg:px-12 xl:px-16 2xl:px-20 ${themeCondition}`}
       ref={dropdownRef}
     >
       {/* Logo Section */}
@@ -74,13 +75,13 @@ const Header = () => {
       </div>
 
       {/* Cart and User Profile Section */}
-      <div className="flex items-center gap-5 relative">
+      <div className="flex items-center gap-4 relative">
         <ThemeToggle toggleTheme={toggleTheme} isDark={isDark} />
         {isMounted && isAuthenticated && (
           <div className="relative">
             <CartBlack
               onClick={() => setIsCartOpen(!isCartOpen)}
-              className="cursor-pointer hover:opacity-80 transition-opacity"
+              className="cursor-pointer hover:opacity-80 transition-opacity -ml-2"
               isDark={isDark}
             />
             {isMounted && totalItems > 0 && (

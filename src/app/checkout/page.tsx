@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCart } from "../../../components/context/CartContext";
 import Link from "next/link";
 import CartLogo from "../../../components/icons/CartLogo";
+import { useTheme } from "../../../components/context/ThemeContext";
 
 const Checkout = () => {
   const [firstName, setFirstname] = useState("");
@@ -22,6 +23,12 @@ const Checkout = () => {
     removeFromCart,
     clearCart,
   } = useCart();
+
+  const { isDark } = useTheme();
+
+  const ThemeCondition = isDark
+    ? "bg-slate-900 text-white"
+    : "bg-[#F8F6F7] text-[#10151F]";
 
   const deliveryPrice = 5;
   const total = deliveryPrice + totalPrice;
@@ -46,8 +53,8 @@ const Checkout = () => {
       <div className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 xl:px-16 2xl:px-20 gap-10">
         <CartLogo />
         <div className="flex flex-col items-center justify-center gap-2">
-          <div className="text-[24px] font-[600] text-[#10151F]">Ooops!</div>
-          <div className="text-[14px] font-[400] text-[#10151F]">
+          <div className="text-[24px] font-[600]">Ooops!</div>
+          <div className="text-[14px] font-[400]">
             You&apos;ve got nothing in your cart just yet...
           </div>
         </div>
@@ -65,7 +72,9 @@ const Checkout = () => {
       <h1 className="xl:ml-2 mx-auto text-2xl mt-30">Checkout</h1>
       <div className="w-full md:mx-auto flex flex-col lg:flex-row items-start justify-between gap-10 xl:gap-6">
         {/* left side - order details */}
-        <div className="flex flex-col gap-10 bg-[#F8F6F7] rounded-2xl w-full xl:w-1/2 px-10 py-20">
+        <div
+          className={`flex flex-col gap-10 ${ThemeCondition} rounded-2xl w-full xl:w-1/2 px-10 py-20`}
+        >
           <div className="text-xl">Order Details</div>
           <div className="flex flex-col gap-10">
             <div className="flex gap-6 w-full">
