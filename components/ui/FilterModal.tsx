@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 const FilterModal = ({
   modalOpen,
   handleFilter,
+  setFilterModalOpen,
 }: {
   modalOpen: boolean;
   handleFilter: (filter: { price_from: number; price_to: number }) => void;
+  setFilterModalOpen: (open: boolean) => void;
 }) => {
   const [filter, setFilter] = useState({
     price_from: 0,
@@ -19,6 +21,25 @@ const FilterModal = ({
   const themeCondition = isDark
     ? "bg-slate-800 text-white"
     : "bg-white text-black";
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setFilterModalOpen(false);
+      }
+    };
+
+    if (modalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [modalOpen, setFilterModalOpen]);
 
   if (!modalOpen) {
     return null;
@@ -58,6 +79,7 @@ const FilterModal = ({
           onClick={() => {
             handleFilter(filter);
             setFilter({ price_from: 0, price_to: 0 });
+            setFilterModalOpen(false);
           }}
         >
           Apply
