@@ -44,3 +44,13 @@ test("should return [1,..., 8, 9, 10, 11, 12] when there are 12 pages", () => {
   const result = createPaginationArray(10, 12);
   expect(result).toEqual([1, "...", 8, 9, 10, 11, 12]);
 });
+
+test("should return [1,...,10,11,12] when user is on the last page", () => {
+  const result = createPaginationArray(12, 12);
+  expect(result).toEqual([1, "...", 10, 11, 12]);
+});
+
+test("should return [1,...,9,10,11,12] when user is on second-to-last page", () => {
+  const result = createPaginationArray(11, 12);
+  expect(result).toEqual([1, "...", 9, 10, 11, 12]);
+});
