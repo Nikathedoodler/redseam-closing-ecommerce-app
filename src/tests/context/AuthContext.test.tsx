@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from "../../../components/context/AuthContext";
 
 // Mock next/navigation module
 const mockPush = jest.fn();
+
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,

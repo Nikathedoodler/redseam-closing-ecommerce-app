@@ -56,6 +56,7 @@ const FilterModal = ({
           <div className="text-[14px] font-medium">From</div>
           <input
             className="w-full"
+            aria-label="Price from"
             value={filter.price_from}
             onChange={(e) =>
               setFilter({ ...filter, price_from: Number(e.target.value) })
@@ -66,6 +67,7 @@ const FilterModal = ({
           <div className="text-[14px] font-medium">To</div>
           <input
             className="w-full"
+            aria-label="Price to"
             value={filter.price_to}
             onChange={(e) =>
               setFilter({ ...filter, price_to: Number(e.target.value) })
