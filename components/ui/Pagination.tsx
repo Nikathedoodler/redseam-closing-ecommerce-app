@@ -35,6 +35,7 @@ export const Pagination = ({
         ) : (
           <button
             key={item}
+            aria-label="page button"
             onClick={() => onPageChange(item as number)}
             className={`w-[32px] h-[32px] rounded-[4px] border-1 border-[#F8F6F7] flex items-center justify-center cursor-pointer ${
               item === page
