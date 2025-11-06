@@ -96,4 +96,68 @@ describe("Pagination", () => {
     // Check disabled state - BackButton sets onClick to undefined when disabled
     expect(backButton.onclick).toBeNull();
   });
+
+  it("next button should call onPageChange with page + 1", () => {
+    const { container } = render(
+      <Pagination
+        page={5}
+        totalPages={10}
+        onPageChange={pageChange}
+        isDark={false}
+      />
+    );
+
+    const [backButton, nextButton] = container.querySelectorAll("svg");
+    expect(nextButton).not.toBeNull();
+
+    if (nextButton) {
+      fireEvent.click(nextButton);
+    }
+
+    expect(pageChange).toHaveBeenCalledWith(6);
+    expect(pageChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("next button should be disabled when on page 10", () => {
+    const { container } = render(
+      <Pagination
+        page={10}
+        totalPages={10}
+        onPageChange={pageChange}
+        isDark={false}
+      />
+    );
+
+    const [backButton, nextButton] = container.querySelectorAll("svg");
+
+    expect(nextButton.onclick).toBeNull();
+  });
+
+  it("applies light mode classes when isDark is false", () => {
+    const { container } = render(
+      <Pagination
+        page={10}
+        totalPages={10}
+        onPageChange={pageChange}
+        isDark={false}
+      />
+    );
+
+    const pageButton = container.querySelector("button");
+    expect(pageButton).toHaveClass("text-[#212B36]");
+  });
+
+  it("applies light mode classes when isDark is true", () => {
+    const { container } = render(
+      <Pagination
+        page={10}
+        totalPages={10}
+        onPageChange={pageChange}
+        isDark={true}
+      />
+    );
+
+    const pageButton = container.querySelector("button");
+    expect(pageButton).toHaveClass("text-white");
+  });
 });
