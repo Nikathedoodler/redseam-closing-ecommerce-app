@@ -48,7 +48,7 @@ const SortModal = ({
       <div className="flex flex-col gap-2 items-start">
         <button
           className="cursor-pointer text-[16px]"
-          value="created_at"
+          aria-label="created_at"
           onClick={() => {
             handleSort("created_at");
             setSortModalOpen(false);
@@ -58,7 +58,7 @@ const SortModal = ({
         </button>
         <button
           className="cursor-pointer text-[16px]"
-          value="price"
+          aria-label="price"
           onClick={() => {
             handleSort("price");
             setSortModalOpen(false);
@@ -68,7 +68,7 @@ const SortModal = ({
         </button>
         <button
           className="cursor-pointer text-[16px]"
-          value="-price"
+          aria-label="-price"
           onClick={() => {
             handleSort("-price");
             setSortModalOpen(false);
