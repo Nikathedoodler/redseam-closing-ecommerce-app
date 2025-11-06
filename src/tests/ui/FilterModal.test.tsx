@@ -20,7 +20,6 @@ describe("FilterModal", () => {
     handleFilter.mockClear();
     setFilterModalOpen.mockClear();
     setFilter.mockClear();
-    // Reset to default (light mode)
     mockIsDark = false;
   });
 
