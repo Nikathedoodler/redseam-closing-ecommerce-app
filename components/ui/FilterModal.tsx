@@ -78,6 +78,7 @@ const FilterModal = ({
       <div className="flex justify-end">
         <button
           className="py-2 px-4 bg-[#FF4000] w-[124px] h-[41px] rounded-[10px] text-[#FFFFFF] cursor-pointer"
+          aria-label="apply"
           onClick={() => {
             handleFilter(filter);
             setFilter({ price_from: 0, price_to: 0 });
