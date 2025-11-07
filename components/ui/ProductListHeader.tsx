@@ -32,12 +32,15 @@ const ProductListHeader = ({
       className={`sticky top-40 z-40 flex items-center justify-between mb-4 ${
         isDark ? "bg-slate-800 text-white" : "bg-white text-black"
       }`}
+      data-testid="product-list-header"
     >
       <div>
-        <h1 className="font-semibold lg:text-2xl text-xl">{title}</h1>
+        <h1 className="font-semibold lg:text-2xl text-xl" aria-label="title">
+          {title}
+        </h1>
       </div>
-      <div className="flex items-center gap-4 ">
-        <div className="hidden md:block">
+      <div className="flex items-center gap-4">
+        <div className="hidden md:block" aria-label="count">
           Showing {productCount.from}-{productCount.to} of{" "}
           {productCount.total || 0} results
         </div>
