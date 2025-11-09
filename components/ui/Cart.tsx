@@ -63,6 +63,7 @@ const Cart = ({ className }: CartProps) => {
             ? "bg-opacity-50 opacity-60"
             : "bg-opacity-0 opacity-0 pointer-events-none"
         }`}
+        data-testid="backdrop"
         onClick={() => setIsCartOpen(false)}
       />
 
@@ -71,6 +72,7 @@ const Cart = ({ className }: CartProps) => {
         className={`fixed top-0 right-0 h-full w-full flex flex-col sm:w-[500px] xl:w-[600px] ${ThemeCondition} shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         } ${className}`}
+        data-testid="cart"
       >
         {/* Fixed Header */}
         <div className="flex justify-between items-center p-4 mt-4 flex-shrink-0">
