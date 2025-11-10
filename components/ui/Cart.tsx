@@ -180,15 +180,15 @@ const Cart = ({ className }: CartProps) => {
                 <div className="flex flex-col gap-4 px-2">
                   <div className="flex items-center justify-between">
                     <div>Items subtotal</div>
-                    <div>$ {totalPrice}</div>
+                    <div data-testid="total-price">$ {totalPrice}</div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div>Delivery</div>
-                    <div>$ {deliveryPrice}</div>
+                    <div data-testid="delivery-price">$ {deliveryPrice}</div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div>Total</div>
-                    <div>$ {total}</div>
+                    <div data-testid="total">$ {total}</div>
                   </div>
                 </div>
                 <Link href={"/checkout"} onClick={() => setIsCartOpen(false)}>

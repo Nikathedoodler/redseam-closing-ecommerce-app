@@ -31,7 +31,7 @@ describe("Cart UI", () => {
       isCartOpen: true,
       setIsCartOpen: mockSetIsCartOpen,
       cartItems: [],
-      totalItems: 0,
+      totalItems: 1,
       totalPrice: 0,
       incrementQuantity: jest.fn(),
       decrementQuantity: jest.fn(),
@@ -176,7 +176,7 @@ describe("Cart UI", () => {
 
     render(<Cart />);
 
-    const plusButton = screen.getByTestId("decrement");
+    const plusButton = screen.getByTestId("increment");
     expect(plusButton).toBeInTheDocument();
 
     fireEvent.click(plusButton);
@@ -299,5 +299,49 @@ describe("Cart UI", () => {
 
     expect(mockSetIsCartOpen).toHaveBeenCalledWith(false);
     expect(mockSetIsCartOpen).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders cart count in header after isMount", async () => {
+    render(<Cart />);
+
+    const header = screen.getByTestId("header");
+    expect(header).toHaveTextContent("Shopping Cart (1)");
+  });
+
+  it("should close cart and call setIsCartOpen with false", () => {
+    render(<Cart />);
+    fireEvent.click(screen.getByRole("button", { name: /Start Shopping/i }));
+
+    expect(mockSetIsCartOpen).toHaveBeenCalledWith(false);
+  });
+
+  it("renders cart item summary values", () => {
+    let mockCartItems = {
+      id: 123,
+      maxStock: 10,
+      cover_image: "/image.jpg",
+      name: "shirt",
+      price: 100,
+      selectedQuantity: 3,
+      total_price: 200,
+      size: "m",
+      color: "blue",
+    };
+
+    (useCart as jest.Mock).mockReturnValue({
+      isCartOpen: true,
+      setIsCartOpen: mockSetIsCartOpen,
+      cartItems: [mockCartItems],
+      totalItems: 0,
+      totalPrice: 100,
+      incrementQuantity: jest.fn(),
+      decrementQuantity: jest.fn(),
+      removeFromCart: jest.fn(),
+    });
+
+    render(<Cart />);
+    expect(screen.getByTestId("total-price")).toHaveTextContent("$ 100");
+    expect(screen.getByTestId("delivery-price")).toHaveTextContent("$ 5");
+    expect(screen.getByTestId("total")).toHaveTextContent("$ 105");
   });
 });
