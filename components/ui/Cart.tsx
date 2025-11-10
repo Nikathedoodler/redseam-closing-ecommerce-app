@@ -76,7 +76,10 @@ const Cart = ({ className }: CartProps) => {
       >
         {/* Fixed Header */}
         <div className="flex justify-between items-center p-4 mt-4 flex-shrink-0">
-          <h1 className={`text-[20px] font-[500] ${ThemeCondition}`}>
+          <h1
+            data-testid="header"
+            className={`text-[20px] font-[500] ${ThemeCondition}`}
+          >
             Shopping Cart {isMounted && `(${totalItems})`}
           </h1>
           <CloseButton onClick={() => setIsCartOpen(false)} />
@@ -130,20 +133,24 @@ const Cart = ({ className }: CartProps) => {
                         <div className="text-sm font-[400]">{item.size}</div>
                         <div className="flex gap-2 w-1/2 xl:w-1/3 py-1 px-4 border items-center justify-between border-[#E1DFE1] rounded-full">
                           <button
-                            onClick={() => decrementQuantity(item.id)}
+                            onClick={() => {
+                              decrementQuantity(item.id);
+                            }}
                             className={`cursor-pointer ${
                               item.selectedQuantity === 1 ? "text-gray-700" : ""
                             }`}
                             disabled={item.selectedQuantity === 1}
+                            data-testid="decrement"
                           >
                             -
                           </button>
                           <div>{item.selectedQuantity}</div>
                           <button
-                            onClick={() =>
-                              incrementQuantity(item.id, item.maxStock)
-                            }
+                            onClick={() => {
+                              incrementQuantity(item.id, item.maxStock);
+                            }}
                             disabled={item.selectedQuantity === item.maxStock}
+                            data-testid="increment"
                             className={`cursor-pointer ${
                               item.selectedQuantity === item.maxStock
                                 ? "text-gray-700"

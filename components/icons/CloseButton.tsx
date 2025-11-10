@@ -2,7 +2,7 @@ import React from "react";
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} data-testid="close-button">
       <svg
         width="32"
         height="32"
